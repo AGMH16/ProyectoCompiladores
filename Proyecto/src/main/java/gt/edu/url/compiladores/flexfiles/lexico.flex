@@ -21,63 +21,95 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     //Identifier = [:jletter:] [:jletterdigit:]*
 
     //DecIntegerLiteral = 0 | [1-9][0-9]*
-/*----------------------------------Asignación de valores ----------------------------*/
+/*-------------------------------------Asignación de valores ---------------------------------*/
     L = [a-z][a-zA-Z_]*
     //L = [a-zA-Z_]+
     D = [0-9]+
     l = [A-Z][A-Za-z_]*
     espacio=[ ,\t,\r,\n]+
-    Sigual= "="
     SaltoL = "\n"
+
+/*------------------------------------------Simbolos-------------------------------------------*/
+    Sigual= "="
     Comillas = "\""
     Coma= ","
-    T_dato="real"
-    Cadena="cadena"
-    T_DisponibleM =("publicos"|"privados"|"protegidos")
-    T_DisponibleP =("publicas"|"privadas"|"protegidas")
-    Nulo= "nulo"
-    Si = "si"
-    Entonces = "entonces"
-    Sino = "sino"
-    Hacer= "hacer"
-    Mientras = "mientras"
-    Para= "para"
-    Devolver = "devolver"
+    Op_incremento = ( "++" | "--" )
+    Op_relacional = ( ">" | "<" | "==" | "!=" | ">=" | "<=" )
+    Op_atribucion = ( "+=" | "-="  | "*=" | "/=" | "%=")
+    Parentesis_a = "("
+    Parentesis_c = ")"
+    Punto= "."
+    Llave_a = "{"
+    Llave_c = "}"
+    Corchete_a = "["
+    Corchete_c = "]"
+    P_coma = ";"
+    Dos_puntos = ":"
     Suma= "+"
     Resta = "-"
     Multiplicacion = "*"
     Division = "/"
     Mod = "%"
-   // Op_logico = ( "!" | "&" | "|" )
-    Op_incremento = ( "++" | "--" )
-    Op_relacional = ( ">" | "<" | "==" | "!=" | ">=" | "<=" )
-    Op_atribucion = ( "+=" | "-="  | "*=" | "/=" | "%=")
+    AND = ("AND"|"&&")
+    OR = ("OR"|"||")
+    OPARBool = {AND}|{OR}
+    Exponente = "^"
     Op_booleano = ("verdadero" | "falso")
-    Parentesis_a = "("
-    Parentesis_c = ")"
-    Punto= "."
-    Leer = "leer"
-    Llave_a = "{"
-    Llave_c = "}"
-    Corchete_a = "["
-    Corchete_c = "]"
-    Constructor = "constructor"
-    Destructor = "destructor"
-    Principal = "Principal"
+
+/*----------------------------------------Estructura IF-----------------------------------------*/
+
+    Si = "si"
+    Entonces = "entonces"
+    Sino = "sino"
+
+/*---------------------------------------Palabras reservadas------------------------------------*/
+
+    T_dato="real"
+    Cadena="cadena"
+    Nulo= "nulo"
+    Entero = "entero"
+    Boleano = "boleano"
+/*---------------------------------------Métodos y Propiedades----------------------------------*/
+
     Metodo = "metodos"
     Propiedad = "propiedades"
-    Clase = "clase"
-    P_coma = ";"
-    Instanciar = "instanciar"
-    Escribir = "escribir"
-    Entero = "entero"
-    Dos_puntos = ":"
-    Boleano = "boleano"
-  //  Palabra= {L}({L}|{D})*
-   // BEsp= "\r"
-    NameClass = {l}({l}|{D})*
+    T_DisponibleM =("publicos"|"privados"|"protegidos")
+    T_DisponibleP =("publicas"|"privadas"|"protegidas")
+
+/*---------------------------------------Estructuras Iterativas---------------------------------*/
+    Hacer= "hacer"
+    Mientras = "mientras"
+    Para= "para"
+    Devolver = "devolver"
     Desde = "desde"
-/*------------Funciones especiales--------------*/
+    
+/*----------------------------------------Métodos de E/S-----------------------------------------*/
+
+    Leer = "leer"
+    Escribir = "escribir"
+
+/*----------------------------------Constructores y Destructores---------------------------------*/
+
+    Constructor = "constructor"
+    Destructor = "destructor"
+
+/*------------------------------------------------Main-------------------------------------------*/
+
+    Principal = "Principal"
+
+/*----------------------------------------------Clases-------------------------------------------*/
+
+    Clase = "clase"
+    NameClass = {l}({l}|{D})*
+
+/*--------------------------------------------Instancias------------------------------------------*/
+
+    Instanciar = "instanciar"
+    Eliminar = "eliminar"
+
+
+   // BEsp= "\r"
+/*-----------------------------------Funciones Especiales-----------------------------------------*/
     CadenaAEntero = "cadenaAEntero"
     CadenaAReal = "cadenaAReal"
     CadenaABoleano = "cadenaABoleano"
@@ -87,21 +119,22 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     Logaritmo = "logaritmo"
     Raiz = "raiz"
     FunESPReal={CadenaAReal}|{Seno}|{Conseno}|{Tangente}|{Logaritmo}|{Raiz}
-    AND = ("AND"|"&&")
-    OR = ("OR"|"||")
-    OPARBool = {AND}|{OR}
-    Exponente = "^"
-    Eliminar = "eliminar"
+
+/*-----------------------------------------Carga de Bibliotecas-----------------------------------*/
+
     Incluir = "incluir"
 
-/*------------------Extras--------------------*/
-Recursividad = "recursividad"
-Estatico = "estatico"
+/*--------------------------------------------Extras----------------------------------------------*/
+    Estatico = "estatico"
 
-/*-----------Variable---------------*/
+/*-------------------------------------------Variables y Números----------------------------------*/
     Identificador = {L}({L}|{D})*
     Numero = ("(-"{D}+")")|{D}+
+
+/*----------------------------------------------Errores-------------------------------------------*/
+
     ErrorNum= {Numero}{Identificador}
+
 //Variables_enteras = {Entero}{Identificador}({Sigual}{Numero}{SaltoL}|{SaltoL})
 //Variables_reales = {Real}{Identificador}
 %{
