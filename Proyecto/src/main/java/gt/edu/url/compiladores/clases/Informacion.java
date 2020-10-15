@@ -6,10 +6,13 @@
 package gt.edu.url.compiladores.clases;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -24,6 +27,7 @@ public class Informacion {
 
     private String ruta, contenido, nombre, nombrecarpeta;
     private Informacion siguiente;
+    private JTextArea t = new JTextArea();
 
     public Informacion() {
         this.nombrecarpeta = "";
@@ -79,11 +83,19 @@ public class Informacion {
         this.siguiente = siguiente;
     }
 
-    public void Lectura_de_proyectos(String name, String nombreArchivo, JTabbedPane panel) {//jTabbedPane1.add("prueba1", txt);
-        JTextArea t = new JTextArea();
+    public JTextArea getT() {
+        return t;
+    }
+
+    public void setT(JTextArea t) {
+        this.t = t;
+    }
+
+    public JScrollPane Lectura_de_proyectos(String name, String nombreArchivo, JTabbedPane panel) {//jTabbedPane1.add("prueba1", txt);
+        //JTextArea t = new JTextArea();
         //JPanel p= new JPanel();
         t.setSize(564, 332);
-
+        //scrll.add(t,1);
         JScrollPane scrll = new JScrollPane(t);
         //p.setSize(564, 332);
         //scrll.setSize(, 0);
@@ -119,7 +131,25 @@ public class Informacion {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERRRO LEYENDO ARCHIVO" + e);
         }
+        return scrll;
 
     }
 
+    public void Guardar_Archivo(String ruta, String texto ) {
+        FileWriter w;
+        BufferedWriter bw;
+        PrintWriter wr;
+        try {
+            w = new FileWriter(ruta/*, true*/);
+            bw = new BufferedWriter(w);
+            wr = new PrintWriter(bw);
+            wr.append(texto);
+            wr.close();
+
+            bw.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRRO" + e);
+        }
+    }
 }

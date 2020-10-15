@@ -7,6 +7,7 @@ package gt.edu.url.compiladores.prueba1;
  */
 import gt.edu.url.compiladores.clases.Informacion;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.accessibility.AccessibleContext;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -36,6 +38,8 @@ public class Interfaz extends javax.swing.JFrame {
     String carpetaactiva, rutaactiva;
     JMenuBar menu = new JMenuBar();
     DefaultListModel modeloLista = new DefaultListModel();
+    JScrollPane pn = new JScrollPane();
+    JTextArea t = new JTextArea();
 
     /**
      * Creates new form Interfaz
@@ -138,21 +142,21 @@ public class Interfaz extends javax.swing.JFrame {
                     case CadenaABoleano:
                         resultado += "  <Función especial>\t\t" + compilador.lexeme + "\n";
                         break;
-                     case Eliminar:
+                    case Eliminar:
                         resultado += "  <Reservada Instanciación >\t\t" + compilador.lexeme + "\n";
-                        break; 
-                     case Destructor:
+                        break;
+                    case Destructor:
                         resultado += "  <Reservada Destructor >\t\t" + compilador.lexeme + "\n";
-                        break; 
-                     case Incluir:
+                        break;
+                    case Incluir:
                         resultado += "  <Reservadan Carga Bibliotecas>\t" + compilador.lexeme + "\n";
-                        break;   
-                     case Estatico:
+                        break;
+                    case Estatico:
                         resultado += "  <Método >\t\t\t" + compilador.lexeme + "\n";
-                        break;   
+                        break;
                     case OPARBool:
                         resultado += "  <Operadores Boleanos >\t\t" + compilador.lexeme + "\n";
-                        break;    
+                        break;
                     case Exponente:
                         resultado += "  <Operador Exponencial >\t\t" + compilador.lexeme + "\n";
                         break;
@@ -186,7 +190,7 @@ public class Interfaz extends javax.swing.JFrame {
                     case Mientras:
                         resultado += "  <Estructura Iterativa While>\t\t" + compilador.lexeme + "\n";
                         break;
-                   /* case Para:
+                    /* case Para:
                         resultado += "  <Estructura Iterativa For>\t" + compilador.lexeme + "\n";
                         break;*/
                     case Devolver:
@@ -209,8 +213,8 @@ public class Interfaz extends javax.swing.JFrame {
                         break;
                     case Mod:
                         resultado += "  <Operador MOD>\t\t" + compilador.lexeme + "\n";
-                        break;                       
-                        
+                        break;
+
                     /*case Op_logico:
                         resultado += "  <Operador logico>\t" + compilador.lexeme + "\n";
                         break;*/
@@ -297,8 +301,8 @@ public class Interfaz extends javax.swing.JFrame {
                         break;
                     case ErrorNum:
                         resultado += "  <Número mal escrito\t\t>" + compilador.lexeme + "\n";
-                        break;                            
-                     case ERROR:
+                        break;
+                    case ERROR:
                         resultado += "  <Simbolo no definido>\n";
                         break;
                     default:
@@ -332,6 +336,8 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         button1 = new java.awt.Button();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -390,6 +396,12 @@ public class Interfaz extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(102, 51, 255));
 
+        jTabbedPane1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTabbedPane1KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -407,10 +419,25 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        button1.setLabel("button1");
+        button1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        button1.setLabel(">>");
         button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -424,25 +451,32 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addComponent(jButton3)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(button1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(11, 11, 11)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addGap(0, 7, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -479,16 +513,20 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
-        JTextArea t = new JTextArea();
-        JScrollPane pn = new JScrollPane();
+        //JTextArea t = new JTextArea();
+        //JScrollPane pn = new JScrollPane();
         int index = jTabbedPane1.getSelectedIndex();
         String nombre = jTabbedPane1.getTitleAt(index);
-        pn = (JScrollPane) jTabbedPane1.getComponent(index);
+        JTextArea t = (JTextArea) jTabbedPane1.getComponent(index);
+        System.out.println(t.getText());
+
+//pn = (JScrollPane) jTabbedPane1.getComponent(index);
+        //t= (JTextArea) pn.getComponent(i);
         //t=(JTextArea) pn.getComponent(0);
         // Falta permitir que el usuario actualice su código
-        String datos = t.getText();
+        //String datos = t.getText();
         System.out.println("//------- nombre -------//" + nombre);
-        System.out.println("//------- datos -------//" + datos);
+        //System.out.println("//------- datos -------//" + datos);
         for (Informacion info : proyectos) {
             if (info.getNombre().equals(nombre)) {
                 if (info.getNombrecarpeta().equals(carpetaactiva)) {
@@ -532,7 +570,8 @@ public class Interfaz extends javax.swing.JFrame {
                     rutaactiva = info.getRuta();
                     System.out.println("RUTA: " + rutaactiva);
                     System.out.println("ARCHIVO: " + info.getNombre());
-                    info.Lectura_de_proyectos(busqueda, rutaactiva, jTabbedPane1);
+                    pn = info.Lectura_de_proyectos(busqueda, rutaactiva, jTabbedPane1);
+                    t = info.getT();
                     //jTabbedPane1.add("prueba1", txt);
                 }
             } else if (busqueda.equals(info.getNombrecarpeta())) {
@@ -546,6 +585,58 @@ public class Interfaz extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jList1ValueChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String texto = t.getText();
+        System.out.println(texto);
+        String busqueda = jList1.getSelectedValue().trim();
+
+        for (Informacion info : proyectos) {
+            if (info.getNombre().equals(busqueda)) {
+                if (info.getNombrecarpeta().equals(carpetaactiva)) {
+                    System.out.println("Si selecciono todo de forma correcta ");
+                    System.out.println("CARPETA: " + carpetaactiva);
+                    rutaactiva = info.getRuta();
+                    System.out.println("RUTA: " + rutaactiva);
+                    System.out.println("ARCHIVO: " + info.getNombre());
+                    info.Guardar_Archivo(rutaactiva, texto);
+                    //t = info.getT();
+                    //jTabbedPane1.add("prueba1", txt);
+                }
+            } else if (busqueda.equals(info.getNombrecarpeta())) {
+                carpetaactiva = info.getNombrecarpeta();
+                //rutaactiva = info.getRuta();
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTabbedPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTabbedPane1KeyPressed
+        // TODO add your handling code here:
+        if (evt.VK_ENTER == evt.getKeyCode()) {
+            String texto = t.getText();
+            System.out.println(texto);
+        }
+
+    }//GEN-LAST:event_jTabbedPane1KeyPressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+         try {
+            // TODO add your handling code here:
+            //  Acceso_a_la_pc();
+            jFileChooser1.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            jFileChooser1.showOpenDialog(null);
+            String ruta = (jFileChooser1.getSelectedFile().toString());
+            File c= new File(ruta);
+            //jFileChooser1.setF(c);
+            obtener_todos_los_archivos(new File(ruta));
+        } catch (IOException ex) {
+            Logger.getLogger(Interfaz.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -590,7 +681,9 @@ public class Interfaz extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
