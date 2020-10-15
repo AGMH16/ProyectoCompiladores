@@ -296,7 +296,7 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "  <Numero>\t\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorNum:
-                        resultado += "  <Número mal escrito\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Número mal escrito\t\t>" + compilador.lexeme + "\n";
                         break;                            
                      case ERROR:
                         resultado += "  <Simbolo no definido>\n";

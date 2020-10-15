@@ -141,70 +141,99 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     public String lexeme;
 %}
 %%
-/* Espacios en blanco */
-{espacio} {/*Ignore*/}
+/*--------------------------------------------Espacios en blanco----------------------------------*/
+    {espacio} {/*Ignore*/}
 
-/* Comentarios */
-{Comment} {/*Ignore*/} 
-
-{ Comillas } {lexeme=yytext(); return Comillas;}
-{T_dato} {lexeme=yytext(); return T_dato;}
-{Cadena} {lexeme=yytext(); return Cadena;}
-{Nulo} {lexeme=yytext(); return Nulo;}
-{Entero} {lexeme=yytext(); return Entero;}
-{Boleano} {lexeme=yytext(); return Boleano;}
-{Si} {lexeme=yytext(); return Si;}
-{Entonces} {lexeme=yytext(); return Entonces;}
-{Sino} {lexeme=yytext(); return Sino;}
-{Hacer} {lexeme=yytext(); return Hacer;}
-{Mientras} {lexeme=yytext(); return Mientras;}
-{Para} {lexeme=yytext(); return Para;}
-{Devolver } {lexeme=yytext(); return Devolver;}
-{ Instanciar} {lexeme=yytext(); return Instanciar;}
-{ Leer } {lexeme=yytext(); return Leer;}
-{ Escribir } {lexeme=yytext(); return Escribir;}
-{Punto} {lexeme=yytext(); return Punto;}
-{Sigual} {lexeme=yytext(); return Igual;}
-{Suma} {lexeme=yytext(); return Suma;}
-{Resta} {lexeme=yytext(); return Resta;}
-{Multiplicacion} {lexeme=yytext(); return Multiplicacion;}
-{Division} {lexeme=yytext(); return Division;}
-{Mod} {lexeme=yytext(); return Mod;}
-{Dos_puntos} {lexeme=yytext(); return Dos_puntos;}
+/*-----------------------------------------------Comentarios---------------------------------------*/
+    {Comment} {/*Ignore*/} 
+/*----------------------------------------------Simbolos-------------------------------------------*/
+    {Comillas} {lexeme=yytext(); return Comillas;}
+    {Punto} {lexeme=yytext(); return Punto;}
+    {Sigual} {lexeme=yytext(); return Igual;}
+    {Suma} {lexeme=yytext(); return Suma;}
+    {Resta} {lexeme=yytext(); return Resta;}
+    {Multiplicacion} {lexeme=yytext(); return Multiplicacion;}
+    {Division} {lexeme=yytext(); return Division;}
+    {Mod} {lexeme=yytext(); return Mod;}
+    {Dos_puntos} {lexeme=yytext(); return Dos_puntos;}
+    {Op_relacional} {lexeme = yytext(); return Op_relacional;}
+    {Op_atribucion} {lexeme = yytext(); return Op_atribucion;}
+    {Op_incremento} {lexeme = yytext(); return Op_incremento;}
+    {Parentesis_a} {lexeme=yytext(); return Parentesis_a;}
+    {Parentesis_c} {lexeme=yytext(); return Parentesis_c;}
+    {Llave_a} {lexeme=yytext(); return Llave_a;}
+    {Llave_c } {lexeme=yytext(); return Llave_c;}
+    {Corchete_a} {lexeme = yytext(); return Corchete_a;}
+    {Corchete_c} {lexeme = yytext(); return Corchete_c;}
+    {Op_booleano} {lexeme = yytext(); return Op_booleano;}
+    {P_coma} {lexeme=yytext(); return P_coma;}
+    {Coma} {lexeme=yytext(); return Coma;}
+    {Exponente} {lexeme=yytext(); return Exponente;}
+    {OPARBool} {lexeme=yytext(); return OPARBool;}
 //{Op_logico} {lexeme=yytext(); return Op_logico;}
-{Op_relacional} {lexeme = yytext(); return Op_relacional;}
-{Op_atribucion} {lexeme = yytext(); return Op_atribucion;}
-{Op_incremento} {lexeme = yytext(); return Op_incremento;}
-{Op_booleano} {lexeme = yytext(); return Op_booleano;}
-{Parentesis_a} {lexeme=yytext(); return Parentesis_a;}
-{Parentesis_c} {lexeme=yytext(); return Parentesis_c;}
-{Llave_a} {lexeme=yytext(); return Llave_a;}
-{Llave_c } {lexeme=yytext(); return Llave_c;}
-{Corchete_a} {lexeme = yytext(); return Corchete_a;}
-{Corchete_c} {lexeme = yytext(); return Corchete_c;}
-{Principal} {lexeme=yytext(); return Principal;}
-{Constructor} {lexeme=yytext(); return Constructor;}
-{Clase} {lexeme=yytext(); return Clase;}
-{Metodo} {lexeme=yytext(); return Metodo;}
-{Propiedad} {lexeme=yytext(); return Propiedad;}
-{T_DisponibleM} {lexeme=yytext(); return T_DisponibleM;}
-{T_DisponibleP} {lexeme=yytext(); return T_DisponibleP;}
-{P_coma} {lexeme=yytext(); return P_coma;}
-{Coma} {lexeme=yytext(); return Coma;}
-{Numero} {lexeme=yytext(); return Numero;}
-{ErrorNum} {lexeme=yytext(); return ErrorNum;}
-{NameClass} {lexeme=yytext(); return NameClass;}
-{Desde} {lexeme=yytext(); return Desde;}
-{CadenaAEntero} {lexeme=yytext(); return CadenaAEntero;}
-{FunESPReal} {lexeme=yytext(); return FunESPReal;}
-{CadenaABoleano} {lexeme=yytext(); return CadenaABoleano;}
-{Eliminar} {lexeme=yytext(); return Eliminar;}
-{Destructor} {lexeme=yytext(); return Destructor;}
-{Incluir} {lexeme=yytext(); return Incluir;}
-{Estatico} {lexeme=yytext(); return Estatico;}
-{OPARBool} {lexeme=yytext(); return OPARBool;}
-{Exponente} {lexeme=yytext(); return Exponente;}
-{Identificador} {lexeme=yytext(); return Identificador;}
+
+/*---------------------------------------Palabras reservadas------------------------------------*/
+    {T_dato} {lexeme=yytext(); return T_dato;}
+    {Cadena} {lexeme=yytext(); return Cadena;}
+    {Nulo} {lexeme=yytext(); return Nulo;}
+    {Entero} {lexeme=yytext(); return Entero;}
+    {Boleano} {lexeme=yytext(); return Boleano;}
+
+/*----------------------------------------Estructura IF-----------------------------------------*/
+    {Si} {lexeme=yytext(); return Si;}
+    {Entonces} {lexeme=yytext(); return Entonces;}
+    {Sino} {lexeme=yytext(); return Sino;}
+
+/*---------------------------------------Estructuras Iterativas---------------------------------*/
+    {Hacer} {lexeme=yytext(); return Hacer;}
+    {Mientras} {lexeme=yytext(); return Mientras;}
+    {Para} {lexeme=yytext(); return Para;}
+    {Devolver } {lexeme=yytext(); return Devolver;}
+    {Desde} {lexeme=yytext(); return Desde;}
+
+
+/*----------------------------------------Métodos de E/S-----------------------------------------*/
+    {Leer} {lexeme=yytext(); return Leer;}
+    {Escribir} {lexeme=yytext(); return Escribir;}
+
+/*------------------------------------------------Main-------------------------------------------*/
+    {Principal} {lexeme=yytext(); return Principal;}
+
+/*----------------------------------Constructores y Destructores---------------------------------*/
+    {Constructor} {lexeme=yytext(); return Constructor;}
+    {Destructor} {lexeme=yytext(); return Destructor;}
+
+/*---------------------------------------Métodos y Propiedades----------------------------------*/
+    {Metodo} {lexeme=yytext(); return Metodo;}
+    {Propiedad} {lexeme=yytext(); return Propiedad;}
+    {T_DisponibleM} {lexeme=yytext(); return T_DisponibleM;}
+    {T_DisponibleP} {lexeme=yytext(); return T_DisponibleP;}
+
+/*----------------------------------------------Clases-------------------------------------------*/
+    {Clase} {lexeme=yytext(); return Clase;}
+    {NameClass} {lexeme=yytext(); return NameClass;}
+
+/*--------------------------------------------Instancias------------------------------------------*/
+    {Instanciar} {lexeme=yytext(); return Instanciar;}
+    {Eliminar} {lexeme=yytext(); return Eliminar;}
+
+/*-----------------------------------Funciones Especiales-----------------------------------------*/
+    {CadenaAEntero} {lexeme=yytext(); return CadenaAEntero;}
+    {FunESPReal} {lexeme=yytext(); return FunESPReal;}
+    {CadenaABoleano} {lexeme=yytext(); return CadenaABoleano;}
+
+/*-----------------------------------------Carga de Bibliotecas-----------------------------------*/
+    {Incluir} {lexeme=yytext(); return Incluir;}
+
+/*--------------------------------------------Extras----------------------------------------------*/
+    {Estatico} {lexeme=yytext(); return Estatico;}
+
+/*-------------------------------------------Variables y Números----------------------------------*/
+    {Numero} {lexeme=yytext(); return Numero;}
+    {Identificador} {lexeme=yytext(); return Identificador;}
+
+/*----------------------------------------------Errores-------------------------------------------*/    
+    {ErrorNum} {lexeme=yytext(); return ErrorNum;}
 
 
 /* Error de analisis */
