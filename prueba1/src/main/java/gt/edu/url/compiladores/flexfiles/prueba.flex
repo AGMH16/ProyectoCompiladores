@@ -40,7 +40,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 /*------Tipo de dato Cadena-----*/
     Cadena="cadena"
 /*Tipo de Dato por disponibilidad*/
-    T_Disponible =( publicas | privadas | publicos | privados)
+    T_Disponible =( publicas | privadas | publicos | privados )
 /*-----------Nulo---------------*/
     Nulo= "nulo"
 /*-----------Si---------------*/
@@ -96,8 +96,10 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     Corchete_a = "["
 /*-----------Corchete final---------------*/
     Corchete_c = "]"
-/*-----------Constructor---------------*/
+/*-----------Constructor y Destructor---------------*/
     Constructor = "constructor"
+    Destructor = "destructor"
+
 /*-----------Principal---------------*/
     Principal = "Principal"
 /*-----------Metodo---------------*/
@@ -110,10 +112,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     P_coma = ";"
 /*-----------Instanciar---------------*/
     Instanciar = "instanciar"
-/*-----------Variable---------------*/
-    Identificador = {L}({L}|{D})*
-/*-----------Numero entero---------------*/
-    Numero = ("(-"{D}+")")|{D}+
+
 /*-----------Escribir---------------*/
     Escribir = "escribir"
 /*-----------Entero---------------*/
@@ -123,13 +122,41 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 /*-----------Boleano---------------*/
     Boleano = "boleano"
 /*-----------Palabra---------------*/
-    Palabra= {L}({L}|{D})*
-/*----------Error de números------------*/
-    ErrorNum= {Numero}{Identificador}
+  //  Palabra= {L}({L}|{D})*
+
 /*-----------Barra espaciadora -----------*/
    // BEsp= "\r"
 /*-----------Nombre de una clase---------------*/
     NameClass = {l}({l}|{D})*
+/*-----------Palabra reservada Desde---------------*/
+Desde = "desde"
+/*------------Funciones especiales--------------*/
+CadenaAEntero = "cadenaAEntero"
+CadenaAReal = "cadenaAReal"
+CadenaABoleano = "cadenaABoleano"
+Seno = "seno"
+Conseno = "coseno"
+Tangente = "tangente"
+Logaritmo = "logaritmo"
+Raiz = "raiz"
+FunESPReal={CadenaAReal}|{Seno}|{Conseno}|{Tangente}|{Logaritmo}|{Raiz}
+AND = "AND"
+OR = "OR"
+OPARBool = {AND}|{OR}
+Exponente = "^"
+/*-----------Palabra reservada eliminar---------------*/
+Eliminar = "eliminar"
+Incluir = "incluir"
+/*------------------Extras--------------------*/
+Recursividad = "recursividad"
+
+Estatico = "estatico"
+/*-----------Variable---------------*/
+    Identificador = {L}({L}|{D})*
+/*-----------Numero entero---------------*/
+    Numero = ("(-"{D}+")")|{D}+
+/*----------Error de números------------*/
+    ErrorNum= {Numero}{Identificador}
 /*--------------------------------------------Armar algoritos -------------------------------------------------*/
 //Variables_enteras = {Entero}{Identificador}({Sigual}{Numero}{SaltoL}|{SaltoL})
 //Variables_reales = {Real}{Identificador}
@@ -272,9 +299,6 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 /* Coma */
 {Coma} {lexeme=yytext(); return Coma;}
 
-/* Identificador */
-{Identificador} {lexeme=yytext(); return Identificador;}
-
 /* Numero */
 {Numero} {lexeme=yytext(); return Numero;}
 
@@ -284,8 +308,30 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 /*Nombre de una clase*/
 {NameClass} {lexeme=yytext(); return NameClass;}
 
-/* Barra espaciadora */
- //{Variables_enteras} {lexeme=yytext(); return BEsp;}
+/* Reservada Desde */
+{Desde} {lexeme=yytext(); return Desde;}
+/* Funcion especial de enteros */
+{CadenaAEntero} {lexeme=yytext(); return CadenaAEntero;}
+/* Funciones especiales de reales */
+{FunESPReal} {lexeme=yytext(); return FunESPReal;}
+/* Funciones especiales a booleano */
+{CadenaABoleano} {lexeme=yytext(); return CadenaABoleano;}
+/* Palabra reservada eliminar */
+{Eliminar} {lexeme=yytext(); return Eliminar;}
+/* Reservada destructor */
+{Destructor} {lexeme=yytext(); return Destructor;}
+/* Reservada incluir */
+{Incluir} {lexeme=yytext(); return Incluir;}
+/* Reservada estatica*/
+{Estatico} {lexeme=yytext(); return Estatico;}
+/* Operadores para boleanos */
+{OPARBool} {lexeme=yytext(); return OPARBool;}
+/* Signo de exponente */
+{Exponente} {lexeme=yytext(); return Exponente;}
+
+/* Identificador */
+{Identificador} {lexeme=yytext(); return Identificador;}
+
 
 /* Error de analisis */
  . {return ERROR;}

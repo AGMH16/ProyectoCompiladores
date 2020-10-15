@@ -4,11 +4,23 @@
  * and open the template in the editor.
  */
 package gt.edu.url.compiladores.prueba1;
+
 /**
  *
  * @author Toshiba
  */
 public enum Token {
+    Desde,
+    SiNo,
+    Exponente,
+    OPARBool,
+    FunESPReal,
+    CadenaAEntero,
+    CadenaABoleano,
+    Eliminar,
+    Destructor,
+    Incluir,
+    Estatico,
     Linea,
     ErrorNum,
     NameClass,
@@ -60,5 +72,5 @@ public enum Token {
     Boleano,
     Entonces,
     BEsp,
-    ERROR     
+    ERROR
 }

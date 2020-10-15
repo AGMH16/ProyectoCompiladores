@@ -126,6 +126,36 @@ public class Interfaz extends javax.swing.JFrame {
                     case Comillas:
                         resultado += "  <Comillas>\t\t" + compilador.lexeme + "\n";
                         break;
+                    case Desde:
+                        resultado += "  <Reservada >\t" + compilador.lexeme + "\n";
+                        break;
+                    case CadenaAEntero:
+                        resultado += "  <Funcion especial>\t" + compilador.lexeme + "\n";
+                        break;
+                    case FunESPReal:
+                        resultado += "  <Funcion especial>\t" + compilador.lexeme + "\n";
+                        break;
+                    case CadenaABoleano:
+                        resultado += "  <Funcion especial>\t" + compilador.lexeme + "\n";
+                        break;
+                     case Eliminar:
+                        resultado += "  <Reservada >\t\t" + compilador.lexeme + "\n";
+                        break; 
+                     case Destructor:
+                        resultado += "  <Reservada >\t\t" + compilador.lexeme + "\n";
+                        break; 
+                     case Incluir:
+                        resultado += "  <Reservada >\t\t" + compilador.lexeme + "\n";
+                        break;   
+                     case Estatico:
+                        resultado += "  <Reservada >\t\t" + compilador.lexeme + "\n";
+                        break;   
+                    case OPARBool:
+                        resultado += "  <Operadores Boleanos >\t" + compilador.lexeme + "\n";
+                        break;    
+                    case Exponente:
+                        resultado += "  <Operador Exponencial >\t" + compilador.lexeme + "\n";
+                        break;
                     case Cadena:
                         resultado += "  <Tipo de dato>\t" + compilador.lexeme + "\n";
                         break;
@@ -263,7 +293,8 @@ public class Interfaz extends javax.swing.JFrame {
                         break;
                     case ErrorNum:
                         resultado += "  <Simbolo incorrecto>\t" + compilador.lexeme + "\n";
-                    case ERROR:
+                        break;                            
+                     case ERROR:
                         resultado += "  <Simbolo no definido>\n";
                         break;
                     default:
