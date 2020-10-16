@@ -128,10 +128,28 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "LINEA " + cont + "\n";
                         break;
                     case Comillas:
-                        resultado += "  <Comillas>\t\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Debe cerrar las comillas>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Desde:
                         resultado += "  <Estructura iterativa For>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case Igual:
+                        resultado += "  <Operador igual>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case Suma:
+                        resultado += "  <Operador suma>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case Resta:
+                        resultado += "  <Operador resta>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case Multiplicacion:
+                        resultado += "  <Operador multiplicacion>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case Division:
+                        resultado += "  <Operador division>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case Mod:
+                        resultado += "  <Operador MOD>\t\t" + compilador.lexeme + "\n";
                         break;
                     case CadenaAEntero:
                         resultado += "  <Función especial>\t\t" + compilador.lexeme + "\n";
@@ -196,25 +214,6 @@ public class Interfaz extends javax.swing.JFrame {
                     case Devolver:
                         resultado += "  <Reservada Devolver>\t\t" + compilador.lexeme + "\n";
                         break;
-                    case Igual:
-                        resultado += "  <Operador igual>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case Suma:
-                        resultado += "  <Operador suma>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case Resta:
-                        resultado += "  <Operador resta>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case Multiplicacion:
-                        resultado += "  <Operador multiplicacion>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case Division:
-                        resultado += "  <Operador division>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case Mod:
-                        resultado += "  <Operador MOD>\t\t" + compilador.lexeme + "\n";
-                        break;
-
                     /*case Op_logico:
                         resultado += "  <Operador logico>\t" + compilador.lexeme + "\n";
                         break;*/
@@ -282,13 +281,16 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "  <Punto y coma>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Coma:
-                        resultado += "  <coma>\t\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Coma>\t\t\t" + compilador.lexeme + "\n";
                         break;
                     case Dos_puntos:
                         resultado += "  <Op. Punto>\t\t\t" + compilador.lexeme + "\n";
                         break;
                     case Identificador:
                         resultado += "  <Identificador Variable>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case Texto:
+                        resultado += "  <Cadena de texto>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Entero:
                         resultado += "  <Reservada int>\t\t" + compilador.lexeme + "\n";
@@ -300,8 +302,59 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "  <Numero>\t\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorNum:
-                        resultado += "  <Número mal escrito\t\t>" + compilador.lexeme + "\n";
+                        resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
                         break;
+                    case ErrorComa:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorOp_IN:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorOp_Rel:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorOp_Atr:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorPar_a:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorPar_c:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorPun:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorLL_a:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorLL_c:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorCo_a:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;                                               
+                    case ErrorCo_c:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorP_C:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorD_pu:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorMul:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorMod:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorOPARBo:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorExp:
+                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;                    
                     case ERROR:
                         resultado += "  <Simbolo no definido>\n";
                         break;
@@ -517,7 +570,7 @@ public class Interfaz extends javax.swing.JFrame {
         //JScrollPane pn = new JScrollPane();
         int index = jTabbedPane1.getSelectedIndex();
         String nombre = jTabbedPane1.getTitleAt(index);
-        JTextArea t = (JTextArea) jTabbedPane1.getComponent(index);
+        //JTextArea t = (JTextArea) jTabbedPane1.getComponent(index);
         System.out.println(t.getText());
 
 //pn = (JScrollPane) jTabbedPane1.getComponent(index);
@@ -623,19 +676,20 @@ public class Interfaz extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         
-         try {
+         //try {
             // TODO add your handling code here:
             //  Acceso_a_la_pc();
+          
             jFileChooser1.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             jFileChooser1.showOpenDialog(null);
             String ruta = (jFileChooser1.getSelectedFile().toString());
-            File c= new File(ruta);
+            //File c= new File(ruta);
             //jFileChooser1.setF(c);
-            obtener_todos_los_archivos(new File(ruta));
+            /*obtener_todos_los_archivos(new File(ruta));
         } catch (IOException ex) {
             Logger.getLogger(Interfaz.class
                     .getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

@@ -10,6 +10,7 @@ package gt.edu.url.compiladores.prueba1;
  * @author Toshiba
  */
 public enum Token {
+    Texto,
     Desde,
     SiNo,
     Exponente,
@@ -73,5 +74,23 @@ public enum Token {
     Boleano,
     Entonces,
     BEsp,
+    ErrorCom,
+    ErrorComa,
+    ErrorOp_IN,
+    ErrorOp_Rel,
+    ErrorOp_Atr,
+    ErrorPar_a,
+    ErrorPar_c,
+    ErrorPun,
+    ErrorLL_a,
+    ErrorLL_c,
+    ErrorCo_a,
+    ErrorCo_c,
+    ErrorP_C,
+    ErrorD_pu,
+    ErrorMul,
+    ErrorMod,
+    ErrorOPARBo,
+    ErrorExp,
     ERROR
 }

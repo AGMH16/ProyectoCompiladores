@@ -9,9 +9,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -115,7 +117,7 @@ public class Informacion {
             br.close();
             fr.close();*/
             FileInputStream fis = new FileInputStream(ruta);
-            InputStreamReader is = new InputStreamReader(fis, "UTF-8");
+            InputStreamReader is = new InputStreamReader(fis, "ISO-8859-1");
             BufferedReader bf = new BufferedReader(is);
             String linea;
             while ((linea = bf.readLine()) != null) {
@@ -136,6 +138,20 @@ public class Informacion {
     }
 
     public void Guardar_Archivo(String ruta, String texto ) {
+        //FileWriter w;
+        //BufferedWriter bw;
+        //PrintWriter wr;
+        try {
+            FileOutputStream x = new FileOutputStream(ruta);
+            OutputStreamWriter y = new OutputStreamWriter(x , "ISO-8859-1");
+            y.append(texto);
+            y.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRRO" + e);
+        }
+    }
+     public void Guardar_Archivo2(String ruta, String texto ) {
         FileWriter w;
         BufferedWriter bw;
         PrintWriter wr;

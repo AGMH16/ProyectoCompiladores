@@ -7,7 +7,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 /*----------------------------------COMENTARIOS----------------------------------------------*/
     LineTerminator = \r|\n|\r\n
     InputCharacter = [^\r\n]
-    WhiteSpace     = {LineTerminator} | [ \t\f]
+    //WhiteSpace     = {LineTerminator} | [ \t\f]
 
     /* comments */
     Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
@@ -21,31 +21,35 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     //Identifier = [:jletter:] [:jletterdigit:]*
 
     //DecIntegerLiteral = 0 | [1-9][0-9]*
+
+    Texto = {Comillas} [^*] ~{Comillas} | {Comillas}{Comillas}
+
 /*-------------------------------------Asignación de valores ---------------------------------*/
     L = [a-z][a-zA-Z_]*
     //L = [a-zA-Z_]+
     D = [0-9]+
     l = [A-Z][A-Za-z_]*
     espacio=[ ,\t,\r,\n]+
-    SaltoL = "\n"
+    //SaltoL = "\n"
+    //signos = [33-47]+
 
 /*------------------------------------------Simbolos-------------------------------------------*/
     Sigual= "="
     Comillas = "\""
-    Coma= ","
+    Scom = ","
     Op_incremento = ( "++" | "--" )
     Op_relacional = ( ">" | "<" | "==" | "!=" | ">=" | "<=" )
     Op_atribucion = ( "+=" | "-="  | "*=" | "/=" | "%=")
     Parentesis_a = "("
     Parentesis_c = ")"
-    Punto= "."
+    Punto = "."
     Llave_a = "{"
     Llave_c = "}"
     Corchete_a = "["
     Corchete_c = "]"
     P_coma = ";"
     Dos_puntos = ":"
-    Suma= "+"
+    Suma = "+"
     Resta = "-"
     Multiplicacion = "*"
     Division = "/"
@@ -129,11 +133,32 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 
 /*-------------------------------------------Variables y Números----------------------------------*/
     Identificador = {L}({L}|{D})*
-    Numero = ("(-"{D}+")")|{D}+
+    Numero = {Resta}{D}+|{D}+
 
 /*----------------------------------------------Errores-------------------------------------------*/
 
-    ErrorNum= {Numero}{Identificador}
+    ErrorNum = {Numero}{Identificador}
+    ErrorCom = {Comillas}{Comillas}+
+    //ErrorComa = {Coma}{Coma}+
+    ErrorOp_IN = {Op_incremento}({Op_incremento}|{Suma}|{Resta})+
+    ErrorOp_Rel = {Op_relacional}{Op_relacional}+
+    ErrorOp_Atr = {Op_atribucion}{Op_atribucion}+
+    ErrorPar_a = {Parentesis_a}{Parentesis_a}+
+    ErrorPar_c = {Parentesis_c}{Parentesis_c}+
+    ErrorPun = {Punto}{Punto}+
+    ErrorLL_a = {Llave_a}{Llave_a}+
+    ErrorLL_c = {Llave_c}{Llave_c}+
+    ErrorCo_a = {Corchete_a}{Corchete_a}+
+    ErrorCo_c = {Corchete_c}{Corchete_c}+
+    ErrorP_C = {P_coma}{P_coma}+
+    ErrorD_pu = {Dos_puntos}{Dos_puntos}+
+    ErrorMul = {Multiplicacion}{Multiplicacion}+
+    ErrorMod = {Mod}{Mod}+
+    Errorand = "&"
+    Erroror = "|"
+    ErrorOPARBo = {OPARBool}({OPARBool}|{Errorand}|{Erroror})+
+    ErrorExp = {Exponente}{Exponente}+
+
 
 //Variables_enteras = {Entero}{Identificador}({Sigual}{Numero}{SaltoL}|{SaltoL})
 //Variables_reales = {Real}{Identificador}
@@ -167,7 +192,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {Corchete_c} {lexeme = yytext(); return Corchete_c;}
     {Op_booleano} {lexeme = yytext(); return Op_booleano;}
     {P_coma} {lexeme=yytext(); return P_coma;}
-    {Coma} {lexeme=yytext(); return Coma;}
+    {Scom} {lexeme=yytext(); return Coma;}
     {Exponente} {lexeme=yytext(); return Exponente;}
     {OPARBool} {lexeme=yytext(); return OPARBool;}
 //{Op_logico} {lexeme=yytext(); return Op_logico;}
@@ -232,9 +257,30 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {Numero} {lexeme=yytext(); return Numero;}
     {Identificador} {lexeme=yytext(); return Identificador;}
 
+/*-------------------------------------------Cadenas de Texto----------------------------------*/
+
+    {Texto} {lexeme=yytext(); return Texto;}
+
 /*----------------------------------------------Errores-------------------------------------------*/    
     {ErrorNum} {lexeme=yytext(); return ErrorNum;}
-
+    {ErrorCom} {lexeme=yytext(); return ErrorCom;}
+    //{ErrorComa} {lexeme=yytext(); return ErrorComa;}
+    {ErrorOp_IN} {lexeme=yytext(); return ErrorOp_IN;}
+    {ErrorOp_Rel} {lexeme=yytext(); return ErrorOp_Rel;}
+    {ErrorOp_Atr} {lexeme=yytext(); return ErrorOp_Atr;}
+    {ErrorPar_a} {lexeme=yytext(); return ErrorPar_a;}
+    {ErrorPar_c} {lexeme=yytext(); return ErrorPar_c;}
+    {ErrorPun} {lexeme=yytext(); return ErrorPun;}
+    {ErrorLL_a} {lexeme=yytext(); return ErrorLL_a;}
+    {ErrorLL_c} {lexeme=yytext(); return ErrorLL_c;}
+    {ErrorCo_a} {lexeme=yytext(); return ErrorCo_a;}
+    {ErrorCo_c} {lexeme=yytext(); return ErrorCo_c;}
+    {ErrorP_C} {lexeme=yytext(); return ErrorP_C;}
+    {ErrorD_pu} {lexeme=yytext(); return ErrorD_pu;}
+    {ErrorMul} {lexeme=yytext(); return ErrorMul;}
+    {ErrorMod} {lexeme=yytext(); return ErrorMod;}
+    {ErrorOPARBo} {lexeme=yytext(); return ErrorOPARBo;}
+    {ErrorExp} {lexeme=yytext(); return ErrorExp;}
 
 /* Error de analisis */
  . {return ERROR;}
