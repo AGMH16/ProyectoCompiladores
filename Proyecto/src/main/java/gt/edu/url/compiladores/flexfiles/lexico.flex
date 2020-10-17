@@ -29,14 +29,14 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     //L = [a-zA-Z_]+
     D = [0-9]+
     l = [A-Z][A-Za-z_]*
-    espacio=[ ,\t,\r,\n]+
+    espacio=[ \t\r\n]+
     //SaltoL = "\n"
     //signos = [33-47]+
 
 /*------------------------------------------Simbolos-------------------------------------------*/
     Sigual= "="
     Comillas = "\""
-    Scom = ","
+    //veamos = "veamos"
     Op_incremento = ( "++" | "--" )
     Op_relacional = ( ">" | "<" | "==" | "!=" | ">=" | "<=" )
     Op_atribucion = ( "+=" | "-="  | "*=" | "/=" | "%=")
@@ -59,6 +59,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     OPARBool = {AND}|{OR}
     Exponente = "^"
     Op_booleano = ("verdadero" | "falso")
+    Coma = ","
 
 /*----------------------------------------Estructura IF-----------------------------------------*/
 
@@ -139,7 +140,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 
     ErrorNum = {Numero}{Identificador}
     ErrorCom = {Comillas}{Comillas}+
-    //ErrorComa = {Coma}{Coma}+
+    ErrorComa = {Coma}{Coma}+
     ErrorOp_IN = {Op_incremento}({Op_incremento}|{Suma}|{Resta})+
     ErrorOp_Rel = {Op_relacional}{Op_relacional}+
     ErrorOp_Atr = {Op_atribucion}{Op_atribucion}+
@@ -192,7 +193,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {Corchete_c} {lexeme = yytext(); return Corchete_c;}
     {Op_booleano} {lexeme = yytext(); return Op_booleano;}
     {P_coma} {lexeme=yytext(); return P_coma;}
-    {Scom} {lexeme=yytext(); return Coma;}
+    {Coma} {lexeme=yytext(); return Coma;}
     {Exponente} {lexeme=yytext(); return Exponente;}
     {OPARBool} {lexeme=yytext(); return OPARBool;}
 //{Op_logico} {lexeme=yytext(); return Op_logico;}
@@ -264,7 +265,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 /*----------------------------------------------Errores-------------------------------------------*/    
     {ErrorNum} {lexeme=yytext(); return ErrorNum;}
     {ErrorCom} {lexeme=yytext(); return ErrorCom;}
-    //{ErrorComa} {lexeme=yytext(); return ErrorComa;}
+    {ErrorComa} {lexeme=yytext(); return ErrorComa;}
     {ErrorOp_IN} {lexeme=yytext(); return ErrorOp_IN;}
     {ErrorOp_Rel} {lexeme=yytext(); return ErrorOp_Rel;}
     {ErrorOp_Atr} {lexeme=yytext(); return ErrorOp_Atr;}
