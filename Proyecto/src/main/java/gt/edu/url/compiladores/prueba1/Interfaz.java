@@ -301,6 +301,9 @@ public class Interfaz extends javax.swing.JFrame {
                     case Numero:
                         resultado += "  <Numero>\t\t\t" + compilador.lexeme + "\n";
                         break;
+                    case ErrorCer:
+                        resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
+                        break;
                     case ErrorNum:
                         resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
                         break;

@@ -74,6 +74,7 @@ public enum Token {
     Boleano,
     Entonces,
     BEsp,
+    ErrorCer,
     ErrorCom,
     ErrorComa,
     ErrorOp_IN,

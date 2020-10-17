@@ -28,6 +28,8 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     L = [a-z][a-zA-Z_]*
     //L = [a-zA-Z_]+
     D = [0-9]+
+    D1 = [1-9]+
+    D0 = "0"
     l = [A-Z][A-Za-z_]*
     espacio=[ \t\r\n]+
     //SaltoL = "\n"
@@ -134,11 +136,11 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 
 /*-------------------------------------------Variables y Números----------------------------------*/
     Identificador = {L}({L}|{D})*
-    Numero = {Resta}{D}+|{D}+
+    Numero = {Resta}{D1}{D}*|{D1}{D}*|{D0}|{D0}{D1}
 
 /*----------------------------------------------Errores-------------------------------------------*/
-
-    ErrorNum = {Numero}{Identificador}
+    ErrorCer = {D0}{D0}+|{D0}{D0}+{D1}
+    ErrorNum = ({Numero}|{ErrorCer}){Identificador}+
     ErrorCom = {Comillas}{Comillas}+
     ErrorComa = {Coma}{Coma}+
     ErrorOp_IN = {Op_incremento}({Op_incremento}|{Suma}|{Resta})+
@@ -263,6 +265,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {Texto} {lexeme=yytext(); return Texto;}
 
 /*----------------------------------------------Errores-------------------------------------------*/    
+    {ErrorCer} {lexeme=yytext(); return ErrorCer;}
     {ErrorNum} {lexeme=yytext(); return ErrorNum;}
     {ErrorCom} {lexeme=yytext(); return ErrorCom;}
     {ErrorComa} {lexeme=yytext(); return ErrorComa;}
