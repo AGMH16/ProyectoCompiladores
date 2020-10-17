@@ -345,7 +345,7 @@ public class Interfaz extends javax.swing.JFrame {
                         break;
                     case ErrorCo_a:
                         resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;                                               
+                        break;
                     case ErrorCo_c:
                         resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
@@ -366,7 +366,16 @@ public class Interfaz extends javax.swing.JFrame {
                         break;
                     case ErrorExp:
                         resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;                    
+                        break;
+                    case ErrorSig:
+                        resultado += "  <Signos inválidos>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorSig2:
+                        resultado += "  <Signos inválidos>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorID:
+                        resultado += "  <Variable mal escrita>\t\t" + compilador.lexeme + "\n";
+                        break;                        
                     case ERROR:
                         resultado += "  <Simbolo no definido>\n";
                         break;
@@ -687,17 +696,16 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
-         //try {
-            // TODO add your handling code here:
-            //  Acceso_a_la_pc();
-          
-            jFileChooser1.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            jFileChooser1.showOpenDialog(null);
-            String ruta = (jFileChooser1.getSelectedFile().toString());
-            //File c= new File(ruta);
-            //jFileChooser1.setF(c);
-            /*obtener_todos_los_archivos(new File(ruta));
+
+        //try {
+        // TODO add your handling code here:
+        //  Acceso_a_la_pc();
+        jFileChooser1.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        jFileChooser1.showOpenDialog(null);
+        String ruta = (jFileChooser1.getSelectedFile().toString());
+        //File c= new File(ruta);
+        //jFileChooser1.setF(c);
+        /*obtener_todos_los_archivos(new File(ruta));
         } catch (IOException ex) {
             Logger.getLogger(Interfaz.class
                     .getName()).log(Level.SEVERE, null, ex);

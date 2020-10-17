@@ -47,6 +47,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     Exponente = "^"
     Op_booleano = ("verdadero" | "falso")
     Coma = ","
+    GuionMe = "_"
 
 /*----------------------------------------Estructura IF-----------------------------------------*/
 
@@ -151,6 +152,15 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     Erroror = "|"
     ErrorOPARBo = {Errorand}{2}({Errorand}|{Erroror})+|{Erroror}{2}({Errorand}|{Erroror})+|{Erroror}|{Errorand}
     ErrorExp = {Exponente}{Exponente}+
+    ErrorArr = "@"
+    ErrorHash = "#"
+    //ErrorCntrDiag = [\]+
+    ErrorDoll = "$"
+    ErrorSig = ({ErrorArr}|{ErrorHash}|{ErrorDoll})+([^*])*
+    ErrorSig2 = ({ErrorOPARBo}|{Errorand}{2}|{Erroror}{2})+([^*])+
+    
+    ErrorID = {Identificador}{ErrorSig}+|({ErrorSig}|{GuionMe})+({Identificador}|[^*])+
+    
     
 
 //Variables_enteras = {Entero}{Identificador}({Sigual}{Numero}{SaltoL}|{SaltoL})
@@ -277,6 +287,9 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {ErrorMod} {lexeme=yytext(); return ErrorMod;}
     {ErrorOPARBo} {lexeme=yytext(); return ErrorOPARBo;}
     {ErrorExp} {lexeme=yytext(); return ErrorExp;}
+    {ErrorSig} {lexeme=yytext(); return ErrorSig;}
+    {ErrorSig2} {lexeme=yytext(); return ErrorSig2;}
+    {ErrorID} {lexeme=yytext(); return ErrorID;}
 
 /* Error de analisis */
  . {return ERROR;}

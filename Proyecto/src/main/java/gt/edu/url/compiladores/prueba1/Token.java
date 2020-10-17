@@ -96,5 +96,8 @@ public enum Token {
     ErrorMod,
     ErrorOPARBo,
     ErrorExp,
+    ErrorSig,
+    ErrorSig2,    
+    ErrorID,
     ERROR
 }
