@@ -99,8 +99,6 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     Instanciar = "instanciar"
     Eliminar = "eliminar"
 
-
-   // BEsp= "\r"
 /*-----------------------------------Funciones Especiales-----------------------------------------*/
     CadenaAEntero = "cadenaAEntero"
     CadenaAReal = "cadenaAReal"
@@ -118,7 +116,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     Bibliotecas = {BibLectura}|{BibPrint}
     ruta = "../"
     Incluir = "incluir"
-    BiExt = /*({Comillas}{Bibliotecas}{Comillas}|*/{Comillas}{ruta}*{Bibliotecas}{Comillas}
+    BiExt = {Comillas}{ruta}*{Bibliotecas}{Comillas}
 
 /*--------------------------------------------Extras----------------------------------------------*/
     Estatico = "estatico"
@@ -151,7 +149,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     ErrorMod = {Mod}{Mod}+
     Errorand = "&"
     Erroror = "|"
-    ErrorOPARBo = {OPARBool}({OPARBool}|{Errorand}|{Erroror})+
+    ErrorOPARBo = {Errorand}{2}({Errorand}|{Erroror})+|{Erroror}{2}({Errorand}|{Erroror})+|{Erroror}|{Errorand}
     ErrorExp = {Exponente}{Exponente}+
     
 
