@@ -146,19 +146,26 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     ErrorCo_c = {Corchete_c}{Corchete_c}+
     ErrorP_C = {P_coma}{P_coma}+
     ErrorD_pu = {Dos_puntos}{Dos_puntos}+
-    ErrorMul = {Multiplicacion}{Multiplicacion}+
-    ErrorMod = {Mod}{Mod}+
+    ErrorSigBas = ({Exponente}|{Mod}|{Suma}|{Resta}|{Multiplicacion})+
+    ErrorSigBas2 = ({Exponente}|{Mod}|{Resta}|{Multiplicacion})+
+    ErrorSigBas3 = ({Exponente}|{Mod}|{Suma}|{Multiplicacion})+    
+    ErrorMul = {Multiplicacion}{ErrorSigBas}
+    ErrorMod = {Mod}{ErrorSigBas}
+    ErrorSum = {Suma}{ErrorSigBas2}
+    ErrorRes = {Resta}{ErrorSigBas3}
+    ErrorExp = {Exponente}{ErrorSigBas}
+    //ErrorMul = {Multiplicacion}{Multiplicacion}+
+    //ErrorMod = {Mod}{Mod}+
     Errorand = "&"
     Erroror = "|"
     ErrorOPARBo = {Errorand}{2}({Errorand}|{Erroror})+|{Erroror}{2}({Errorand}|{Erroror})+|{Erroror}|{Errorand}
-    ErrorExp = {Exponente}{Exponente}+
+    //ErrorExp = {Exponente}{Exponente}+
     ErrorArr = "@"
     ErrorHash = "#"
     //ErrorCntrDiag = [\]+
     ErrorDoll = "$"
     ErrorSig = ({ErrorArr}|{ErrorHash}|{ErrorDoll})+([^*])*
-    ErrorSig2 = ({ErrorOPARBo}|{Errorand}{2}|{Erroror}{2})+([^*])+
-    
+    //ErrorSig2 = ({ErrorOPARBo}/*|{Errorand}{2}|{Erroror}{2}*/)+([^*])+
     ErrorID = {Identificador}{ErrorSig}+|({ErrorSig}|{GuionMe})+({Identificador}|[^*])+
     
     
@@ -285,10 +292,12 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {ErrorD_pu} {lexeme=yytext(); return ErrorD_pu;}
     {ErrorMul} {lexeme=yytext(); return ErrorMul;}
     {ErrorMod} {lexeme=yytext(); return ErrorMod;}
-    {ErrorOPARBo} {lexeme=yytext(); return ErrorOPARBo;}
     {ErrorExp} {lexeme=yytext(); return ErrorExp;}
+    {ErrorSum} {lexeme=yytext(); return ErrorSum;}
+    {ErrorRes} {lexeme=yytext(); return ErrorRes;}
+    {ErrorOPARBo} {lexeme=yytext(); return ErrorOPARBo;}
     {ErrorSig} {lexeme=yytext(); return ErrorSig;}
-    {ErrorSig2} {lexeme=yytext(); return ErrorSig2;}
+    //{ErrorSig2} {lexeme=yytext(); return ErrorSig2;}
     {ErrorID} {lexeme=yytext(); return ErrorID;}
 
 /* Error de analisis */

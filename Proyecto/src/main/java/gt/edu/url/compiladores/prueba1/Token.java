@@ -92,6 +92,8 @@ public enum Token {
     ErrorCo_c,
     ErrorP_C,
     ErrorD_pu,
+    ErrorSum,
+    ErrorRes,
     ErrorMul,
     ErrorMod,
     ErrorOPARBo,
