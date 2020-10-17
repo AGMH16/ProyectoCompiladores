@@ -7,23 +7,12 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 /*----------------------------------COMENTARIOS----------------------------------------------*/
     LineTerminator = \r|\n|\r\n
     InputCharacter = [^\r\n]
-    //WhiteSpace     = {LineTerminator} | [ \t\f]
-
     /* comments */
     Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
-
     TraditionalComment   = "/*" [^*] ~"*/" | "/*" "*"+ "/"
-    // Comment can be the last line of the file, without line terminator.
     EndOfLineComment     = "//" {InputCharacter}* {LineTerminator}?
     DocumentationComment = "/**" {CommentContent} "*"+ "/"
     CommentContent       = ( [^*] | \*+ [^/*] )*
-
-    //Identifier = [:jletter:] [:jletterdigit:]*
-
-    //DecIntegerLiteral = 0 | [1-9][0-9]*
-
-    Texto = {Comillas} [^*] ~{Comillas} | {Comillas}{Comillas}
-
 /*-------------------------------------Asignación de valores ---------------------------------*/
     L = [a-z][a-zA-Z_]*
     //L = [a-zA-Z_]+
@@ -32,13 +21,9 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     D0 = "0"
     l = [A-Z][A-Za-z_]*
     espacio=[ \t\r\n]+
-    //SaltoL = "\n"
-    //signos = [33-47]+
-
 /*------------------------------------------Simbolos-------------------------------------------*/
     Sigual= "="
     Comillas = "\""
-    //veamos = "veamos"
     Op_incremento = ( "++" | "--" )
     Op_relacional = ( ">" | "<" | "==" | "!=" | ">=" | "<=" )
     Op_atribucion = ( "+=" | "-="  | "*=" | "/=" | "%=")
@@ -128,8 +113,12 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     FunESPReal={CadenaAReal}|{Seno}|{Conseno}|{Tangente}|{Logaritmo}|{Raiz}
 
 /*-----------------------------------------Carga de Bibliotecas-----------------------------------*/
-
+    BibLectura = "lectura.loop"
+    BibPrint = "impresion.loop"
+    Bibliotecas = {BibLectura}|{BibPrint}
+    ruta = "../"
     Incluir = "incluir"
+    BiExt = /*({Comillas}{Bibliotecas}{Comillas}|*/{Comillas}{ruta}*{Bibliotecas}{Comillas}
 
 /*--------------------------------------------Extras----------------------------------------------*/
     Estatico = "estatico"
@@ -137,10 +126,13 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 /*-------------------------------------------Variables y Números----------------------------------*/
     Identificador = {L}({L}|{D})*
     Numero = {Resta}{D1}{D}*|{D1}{D}*|{D0}|{D0}{D1}
-
+    Decimal = ({D1}{1}{D}*|{D0}){Punto}{D}*{D1}{D0}{0,1}
+/*-------------------------------------------Cadenas de Texto-------------------------------------*/
+    Texto = {Comillas} [^*] ~{Comillas} | {Comillas}{Comillas}
 /*----------------------------------------------Errores-------------------------------------------*/
     ErrorCer = {D0}{D0}+|{D0}{D0}+{D1}
     ErrorNum = ({Numero}|{ErrorCer}){Identificador}+
+    ErrorDec = ({D0}|{ErrorCer})({Coma}|{ErrorPun}|{Punto}){Numero}
     ErrorCom = {Comillas}{Comillas}+
     ErrorComa = {Coma}{Coma}+
     ErrorOp_IN = {Op_incremento}({Op_incremento}|{Suma}|{Resta})+
@@ -161,7 +153,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     Erroror = "|"
     ErrorOPARBo = {OPARBool}({OPARBool}|{Errorand}|{Erroror})+
     ErrorExp = {Exponente}{Exponente}+
-
+    
 
 //Variables_enteras = {Entero}{Identificador}({Sigual}{Numero}{SaltoL}|{SaltoL})
 //Variables_reales = {Real}{Identificador}
@@ -171,7 +163,6 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 %%
 /*--------------------------------------------Espacios en blanco----------------------------------*/
     {espacio} {/*Ignore*/}
-
 /*-----------------------------------------------Comentarios---------------------------------------*/
     {Comment} {/*Ignore*/} 
 /*----------------------------------------------Simbolos-------------------------------------------*/
@@ -252,21 +243,24 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 
 /*-----------------------------------------Carga de Bibliotecas-----------------------------------*/
     {Incluir} {lexeme=yytext(); return Incluir;}
+    {BiExt} {lexeme=yytext(); return BiExt;}
 
 /*--------------------------------------------Extras----------------------------------------------*/
     {Estatico} {lexeme=yytext(); return Estatico;}
 
 /*-------------------------------------------Variables y Números----------------------------------*/
     {Numero} {lexeme=yytext(); return Numero;}
+    {Decimal} {lexeme=yytext(); return Decimal;}
     {Identificador} {lexeme=yytext(); return Identificador;}
 
-/*-------------------------------------------Cadenas de Texto----------------------------------*/
+/*-------------------------------------------Cadenas de Texto-------------------------------------*/
 
     {Texto} {lexeme=yytext(); return Texto;}
 
 /*----------------------------------------------Errores-------------------------------------------*/    
     {ErrorCer} {lexeme=yytext(); return ErrorCer;}
     {ErrorNum} {lexeme=yytext(); return ErrorNum;}
+    {ErrorDec} {lexeme=yytext(); return ErrorDec;}
     {ErrorCom} {lexeme=yytext(); return ErrorCom;}
     {ErrorComa} {lexeme=yytext(); return ErrorComa;}
     {ErrorOp_IN} {lexeme=yytext(); return ErrorOp_IN;}

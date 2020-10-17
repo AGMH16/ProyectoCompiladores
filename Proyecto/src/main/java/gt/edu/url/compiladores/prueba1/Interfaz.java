@@ -169,6 +169,9 @@ public class Interfaz extends javax.swing.JFrame {
                     case Incluir:
                         resultado += "  <Reservadan Carga Bibliotecas>\t" + compilador.lexeme + "\n";
                         break;
+                    case BiExt:
+                        resultado += "  <Bibliotecas Externas>\t\t" + compilador.lexeme + "\n";
+                        break;
                     case Estatico:
                         resultado += "  <Método >\t\t\t" + compilador.lexeme + "\n";
                         break;
@@ -299,12 +302,18 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "  <Reservada Bolean>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Numero:
-                        resultado += "  <Numero>\t\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Numero Entero>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case Decimal:
+                        resultado += "  <Numero Decimal>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorCer:
                         resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorNum:
+                        resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorDec:
                         resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorComa:
