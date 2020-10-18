@@ -361,7 +361,7 @@ public class Interfaz extends javax.swing.JFrame {
                     case ErrorMod:
                         resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
-                    case ErrorDiv:
+                    case ErrorSigP:
                         resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorExp:

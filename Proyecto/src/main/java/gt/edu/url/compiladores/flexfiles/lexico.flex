@@ -152,9 +152,9 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     ErrorHash = "#"
     ErrorDoll = "$"
     ErrorSig = ({ErrorArr}|{ErrorHash}|{ErrorDoll})+([^*])*
-    ErrorDiv = ({Division}{1}{ErrorSigBas}+)+|(({ErrorSigBas}+{Division}{1})+|{ErrorSigBas}+)+    
+    ErrorSigP = ({Division}{1}{ErrorSigBas}+)+|(({ErrorSigBas}+{Division}{1})+|{ErrorSigBas}+)+    
 //ErrorSig2 = ({ErrorOPARBo}/*|{Errorand}{2}|{Erroror}{2}*/)+([^*])+
-    ErrorID = {Identificador}({ErrorSig}|{ErrorDiv})+|({ErrorSig}|{GuionMe})+({Identificador}|[^*])+
+    ErrorID = {Identificador}({Division}|({ErrorSig}|{ErrorSigP})+)|({ErrorSig}|{GuionMe})+({Identificador}|[^*])+
     
     
 
@@ -268,7 +268,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {ErrorOp_IN} {lexeme=yytext(); return ErrorOp_IN;}
     {ErrorOp_Rel} {lexeme=yytext(); return ErrorOp_Rel;}
     {ErrorOp_Atr} {lexeme=yytext(); return ErrorOp_Atr;}
-    {ErrorDiv} {lexeme=yytext(); return ErrorDiv;}
+    {ErrorSigP} {lexeme=yytext(); return ErrorSigP;}
     {ErrorOPARBo} {lexeme=yytext(); return ErrorOPARBo;}
     {ErrorSig} {lexeme=yytext(); return ErrorSig;}
     //{ErrorSig2} {lexeme=yytext(); return ErrorSig2;}
