@@ -277,11 +277,14 @@ public class Interfaz extends javax.swing.JFrame {
                     case NameClass:
                         resultado += "  <Nombre de una clase>\t\t" + compilador.lexeme + "\n";
                         break;
+                    /*case CallFunofClss:
+                        resultado += "  <Llamado a una función>\t\t" + compilador.lexeme + "\n";
+                        break;*/    
                     case Punto:
                         resultado += "  <Opunto Punto>\t\t" + compilador.lexeme + "\n";
                         break;
                     case P_coma:
-                        resultado += "  <Operador Punto y coma>\t" + compilador.lexeme + "\n";
+                        resultado += "  <Operador Punto y coma>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Coma:
                         resultado += "  <Operador Coma>\t\t" + compilador.lexeme + "\n";

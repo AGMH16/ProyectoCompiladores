@@ -23,6 +23,7 @@ public enum Token {
     Estatico,
     Linea,
     NameClass,
+   // CallFunofClss,
     Comentario,
     Comillas,
     Coma,

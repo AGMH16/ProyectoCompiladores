@@ -161,7 +161,6 @@ public class Informacion {
             wr = new PrintWriter(bw);
             wr.append(texto);
             wr.close();
-
             bw.close();
 
         } catch (Exception e) {
