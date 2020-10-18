@@ -47,11 +47,7 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     Exponente = "^"
     Op_booleano = ("verdadero" | "falso")
     Coma = ","
-    GuionMe = "_"
-    //Parentesis = {Parentesis_a}{Parentesis_c}
-    //Corchetes = {Corchete_a}{Corchete_c}
-    //LLaves = {Llave_a}{Llave_c}
-    
+    GuionMe = "_"    
 
 /*----------------------------------------Estructura IF-----------------------------------------*/
 
@@ -137,30 +133,18 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     ErrorNum = ({Numero}|{ErrorCer}){Identificador}+
     ErrorDec = ({D0}|{ErrorCer})({Coma}|{ErrorPun}|{Punto}){Numero}
     ErrorCom = {Comillas}{2}{Comillas}+
-    //ErrorComa = {Coma}{Coma}+
     ErrorOp_IN = {Op_incremento}({Op_incremento}|{Suma}|{Resta})+
     ErrorOp_Rel = {Op_relacional}{Op_relacional}+
     ErrorOp_Atr = {Op_atribucion}{Op_atribucion}+
-    //ErrorPar_a = {Parentesis_a}{Parentesis_a}+
-    //ErrorPar_c = {Parentesis_c}{Parentesis_c}+
     ErrorPun = {Punto}{Punto}+
-    //ErrorLL_a = {Llave_a}{Llave_a}+
-    //ErrorLL_c = {Llave_c}{Llave_c}+
-    //ErrorCo_a = {Corchete_a}{Corchete_a}+
-    //ErrorCo_c = {Corchete_c}{Corchete_c}+
-    //ErrorP_C = {P_coma}{P_coma}+
-    //ErrorD_pu = {Dos_puntos}{Dos_puntos}+
     ErrorSigBas = ({Exponente}|{Mod}|{Suma}|{Resta}|{Multiplicacion})+
     ErrorSignos = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{Corchete_a}|{Corchete_c}|{P_coma}|{Dos_puntos}|{Parentesis_a}|{Parentesis_c})+
     ErrorSignos2 = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{P_coma}|{Dos_puntos})+
-   // ErrorSignos3 = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{Corchete_a}|{P_coma}|{Dos_puntos}|{Parentesis_a}|{Parentesis_c})+
-   // ErrorSignos4 = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{Corchete_a}|{Corchete_c}|{P_coma}|{Dos_puntos}|{Parentesis_c})+
     
     ErrorSIGNOS = ({ErrorSignos2}|{Corchete_c}|{Parentesis_c})+{ErrorSignos}+
     ErrorSIGNOS1 = {Parentesis_a}({ErrorSignos2}|{Corchete_a}|{Parentesis_a})+{ErrorSignos}*
-
-    ErrorSIGNOS2 = {Corchete_a}({ErrorSignos2}|{Parentesis_a}|{Parentesis_c})+{ErrorSignos}* 
-
+    ErrorSIGNOS2 = {Corchete_a}({Corchete_a}|{ErrorSignos2}|{Parentesis_a}|{Parentesis_c})+{ErrorSignos}* 
+    
     Errorand = "&"
     Erroror = "|"
     ErrorOPARBo = {Errorand}{2}({Errorand}|{Erroror})+|{Erroror}{2}({Errorand}|{Erroror})+|{Erroror}|{Errorand}
@@ -168,7 +152,6 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     ErrorHash = "#"
     ErrorDoll = "$"
     ErrorSig = ({ErrorArr}|{ErrorHash}|{ErrorDoll})+([^*])*
-    //ErrorDiv = ({Division}{1}{ErrorSigBas}+)+|({ErrorSigBas}+{Division}{1})+
     ErrorDiv = ({Division}{1}{ErrorSigBas}+)+|(({ErrorSigBas}+{Division}{1})+|{ErrorSigBas}+)+    
 //ErrorSig2 = ({ErrorOPARBo}/*|{Errorand}{2}|{Erroror}{2}*/)+([^*])+
     ErrorID = {Identificador}({ErrorSig}|{ErrorDiv})+|({ErrorSig}|{GuionMe})+({Identificador}|[^*])+
@@ -209,9 +192,6 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {Coma} {lexeme=yytext(); return Coma;}
     {Exponente} {lexeme=yytext(); return Exponente;}
     {OPARBool} {lexeme=yytext(); return OPARBool;}
-    //{Parentesis} {lexeme=yytext(); return Parentesis;}
-    //{Llaves} {lexeme=yytext(); return Llaves;}
-
 //{Op_logico} {lexeme=yytext(); return Op_logico;}
 
 /*---------------------------------------Palabras reservadas------------------------------------*/
@@ -285,19 +265,9 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {ErrorNum} {lexeme=yytext(); return ErrorNum;}
     {ErrorDec} {lexeme=yytext(); return ErrorDec;}
     {ErrorCom} {lexeme=yytext(); return ErrorCom;}
-    //{ErrorComa} {lexeme=yytext(); return ErrorComa;}
     {ErrorOp_IN} {lexeme=yytext(); return ErrorOp_IN;}
     {ErrorOp_Rel} {lexeme=yytext(); return ErrorOp_Rel;}
     {ErrorOp_Atr} {lexeme=yytext(); return ErrorOp_Atr;}
-    //{ErrorPar_a} {lexeme=yytext(); return ErrorPar_a;}
-    //{ErrorPar_c} {lexeme=yytext(); return ErrorPar_c;}
-    //{ErrorPun} {lexeme=yytext(); return ErrorPun;}
-    //{ErrorLL_a} {lexeme=yytext(); return ErrorLL_a;}
-    //{ErrorLL_c} {lexeme=yytext(); return ErrorLL_c;}
-    //{ErrorCo_a} {lexeme=yytext(); return ErrorCo_a;}
-    //{ErrorCo_c} {lexeme=yytext(); return ErrorCo_c;}
-    //{ErrorP_C} {lexeme=yytext(); return ErrorP_C;}
-    //{ErrorD_pu} {lexeme=yytext(); return ErrorD_pu;}
     {ErrorDiv} {lexeme=yytext(); return ErrorDiv;}
     {ErrorOPARBo} {lexeme=yytext(); return ErrorOPARBo;}
     {ErrorSig} {lexeme=yytext(); return ErrorSig;}
