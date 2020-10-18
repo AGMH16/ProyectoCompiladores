@@ -143,10 +143,10 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "  <Operador resta>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Multiplicacion:
-                        resultado += "  <Operador multiplicacion>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Operador multiplicación>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Division:
-                        resultado += "  <Operador division>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Operador división>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Mod:
                         resultado += "  <Operador MOD>\t\t" + compilador.lexeme + "\n";
@@ -221,7 +221,7 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "  <Operador logico>\t" + compilador.lexeme + "\n";
                         break;*/
                     case Op_incremento:
-                        resultado += "  <Operador incremento>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Operador incremento|decremento>\t" + compilador.lexeme + "\n";
                         break;
                     case Op_relacional:
                         resultado += "  <Operador relacional>\t\t" + compilador.lexeme + "\n";
@@ -233,11 +233,11 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "  <Operador booleano>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Parentesis_a:
-                        resultado += "  <Parentesis de apertura>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Paréntesis de apertura>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Parentesis_c:
-                        resultado += "  <Parentesis de cierre>\t\t" + compilador.lexeme + "\n";
-                        break;
+                        resultado += "  <Paréntesis de cierre>\t\t" + compilador.lexeme + "\n";
+                        break;    
                     case Llave_a:
                         resultado += "  <Llave de apertura>\t\t" + compilador.lexeme + "\n";
                         break;
@@ -249,12 +249,12 @@ public class Interfaz extends javax.swing.JFrame {
                         break;
                     case Corchete_c:
                         resultado += "  <Corchete de cierre>\t\t" + compilador.lexeme + "\n";
-                        break;
+                        break;   
                     case Principal:
-                        resultado += "  <Reservada main>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Reservada Main>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Metodo:
-                        resultado += "  <Reservada Metodo>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Reservada Método>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Leer:
                         resultado += "  <Reservada Leer>\t\t" + compilador.lexeme + "\n";
@@ -278,16 +278,16 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "  <Nombre de una clase>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Punto:
-                        resultado += "  <Op. Punto>\t\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Opunto Punto>\t\t" + compilador.lexeme + "\n";
                         break;
                     case P_coma:
-                        resultado += "  <Punto y coma>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Operador Punto y coma>\t" + compilador.lexeme + "\n";
                         break;
                     case Coma:
-                        resultado += "  <Coma>\t\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Operador Coma>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Dos_puntos:
-                        resultado += "  <Op. Punto>\t\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Operador Dos Punto>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Identificador:
                         resultado += "  <Identificador Variable>\t\t" + compilador.lexeme + "\n";
@@ -302,10 +302,10 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "  <Reservada Bolean>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Numero:
-                        resultado += "  <Numero Entero>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Número Entero>\t\t" + compilador.lexeme + "\n";
                         break;
                     case Decimal:
-                        resultado += "  <Numero Decimal>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Número Decimal>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorCer:
                         resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
@@ -317,55 +317,64 @@ public class Interfaz extends javax.swing.JFrame {
                         resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorComa:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorOp_IN:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorOp_Rel:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorOp_Atr:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorPar_a:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorPar_c:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorPun:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorLL_a:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorLL_c:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorCo_a:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorCo_c:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorP_C:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorD_pu:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorMul:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorMod:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
-                    case ErrorOPARBo:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                    case ErrorDiv:
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorExp:
-                        resultado += "  <Simbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;   
+                    case ErrorSum:
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;
+                    case ErrorRes:
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        break;     
+                    case ErrorOPARBo:
+                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
                         break;
                     case ErrorSig:
                         resultado += "  <Signos inválidos>\t\t" + compilador.lexeme + "\n";
@@ -373,6 +382,15 @@ public class Interfaz extends javax.swing.JFrame {
                     case ErrorSig2:
                         resultado += "  <Signos inválidos>\t\t" + compilador.lexeme + "\n";
                         break;
+                    case ErrorSIGNOS:
+                        resultado += "  <Signos inválidos S>\t\t" + compilador.lexeme + "\n";
+                        break;                        
+                    case ErrorSIGNOS1:
+                        resultado += "  <Signos inválidos S1>\t\t" + compilador.lexeme + "\n";
+                        break; 
+                    case ErrorSIGNOS2:
+                        resultado += "  <Signos inválidos S2>\t\t" + compilador.lexeme + "\n";
+                        break; 
                     case ErrorID:
                         resultado += "  <Variable mal escrita>\t\t" + compilador.lexeme + "\n";
                         break;                        

@@ -48,6 +48,10 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     Op_booleano = ("verdadero" | "falso")
     Coma = ","
     GuionMe = "_"
+    //Parentesis = {Parentesis_a}{Parentesis_c}
+    //Corchetes = {Corchete_a}{Corchete_c}
+    //LLaves = {Llave_a}{Llave_c}
+    
 
 /*----------------------------------------Estructura IF-----------------------------------------*/
 
@@ -132,41 +136,42 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     ErrorCer = {D0}{D0}+|{D0}{D0}+{D1}
     ErrorNum = ({Numero}|{ErrorCer}){Identificador}+
     ErrorDec = ({D0}|{ErrorCer})({Coma}|{ErrorPun}|{Punto}){Numero}
-    ErrorCom = {Comillas}{Comillas}+
-    ErrorComa = {Coma}{Coma}+
+    ErrorCom = {Comillas}{2}{Comillas}+
+    //ErrorComa = {Coma}{Coma}+
     ErrorOp_IN = {Op_incremento}({Op_incremento}|{Suma}|{Resta})+
     ErrorOp_Rel = {Op_relacional}{Op_relacional}+
     ErrorOp_Atr = {Op_atribucion}{Op_atribucion}+
-    ErrorPar_a = {Parentesis_a}{Parentesis_a}+
-    ErrorPar_c = {Parentesis_c}{Parentesis_c}+
+    //ErrorPar_a = {Parentesis_a}{Parentesis_a}+
+    //ErrorPar_c = {Parentesis_c}{Parentesis_c}+
     ErrorPun = {Punto}{Punto}+
-    ErrorLL_a = {Llave_a}{Llave_a}+
-    ErrorLL_c = {Llave_c}{Llave_c}+
-    ErrorCo_a = {Corchete_a}{Corchete_a}+
-    ErrorCo_c = {Corchete_c}{Corchete_c}+
-    ErrorP_C = {P_coma}{P_coma}+
-    ErrorD_pu = {Dos_puntos}{Dos_puntos}+
+    //ErrorLL_a = {Llave_a}{Llave_a}+
+    //ErrorLL_c = {Llave_c}{Llave_c}+
+    //ErrorCo_a = {Corchete_a}{Corchete_a}+
+    //ErrorCo_c = {Corchete_c}{Corchete_c}+
+    //ErrorP_C = {P_coma}{P_coma}+
+    //ErrorD_pu = {Dos_puntos}{Dos_puntos}+
     ErrorSigBas = ({Exponente}|{Mod}|{Suma}|{Resta}|{Multiplicacion})+
-    ErrorSigBas2 = ({Exponente}|{Mod}|{Resta}|{Multiplicacion})+
-    ErrorSigBas3 = ({Exponente}|{Mod}|{Suma}|{Multiplicacion})+    
-    ErrorMul = {Multiplicacion}{ErrorSigBas}
-    ErrorMod = {Mod}{ErrorSigBas}
-    ErrorSum = {Suma}{ErrorSigBas2}
-    ErrorRes = {Resta}{ErrorSigBas3}
-    ErrorExp = {Exponente}{ErrorSigBas}
-    //ErrorMul = {Multiplicacion}{Multiplicacion}+
-    //ErrorMod = {Mod}{Mod}+
+    ErrorSignos = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{Corchete_a}|{Corchete_c}|{P_coma}|{Dos_puntos}|{Parentesis_a}|{Parentesis_c})+
+    ErrorSignos2 = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{P_coma}|{Dos_puntos})+
+   // ErrorSignos3 = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{Corchete_a}|{P_coma}|{Dos_puntos}|{Parentesis_a}|{Parentesis_c})+
+   // ErrorSignos4 = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{Corchete_a}|{Corchete_c}|{P_coma}|{Dos_puntos}|{Parentesis_c})+
+    
+    ErrorSIGNOS = ({ErrorSignos2}|{Corchete_c}|{Parentesis_c})+{ErrorSignos}+
+    ErrorSIGNOS1 = {Parentesis_a}({ErrorSignos2}|{Corchete_a}|{Parentesis_a})+{ErrorSignos}*
+
+    ErrorSIGNOS2 = {Corchete_a}({ErrorSignos2}|{Parentesis_a}|{Parentesis_c})+{ErrorSignos}* 
+
     Errorand = "&"
     Erroror = "|"
     ErrorOPARBo = {Errorand}{2}({Errorand}|{Erroror})+|{Erroror}{2}({Errorand}|{Erroror})+|{Erroror}|{Errorand}
-    //ErrorExp = {Exponente}{Exponente}+
     ErrorArr = "@"
     ErrorHash = "#"
-    //ErrorCntrDiag = [\]+
     ErrorDoll = "$"
     ErrorSig = ({ErrorArr}|{ErrorHash}|{ErrorDoll})+([^*])*
-    //ErrorSig2 = ({ErrorOPARBo}/*|{Errorand}{2}|{Erroror}{2}*/)+([^*])+
-    ErrorID = {Identificador}{ErrorSig}+|({ErrorSig}|{GuionMe})+({Identificador}|[^*])+
+    //ErrorDiv = ({Division}{1}{ErrorSigBas}+)+|({ErrorSigBas}+{Division}{1})+
+    ErrorDiv = ({Division}{1}{ErrorSigBas}+)+|(({ErrorSigBas}+{Division}{1})+|{ErrorSigBas}+)+    
+//ErrorSig2 = ({ErrorOPARBo}/*|{Errorand}{2}|{Erroror}{2}*/)+([^*])+
+    ErrorID = {Identificador}({ErrorSig}|{ErrorDiv})+|({ErrorSig}|{GuionMe})+({Identificador}|[^*])+
     
     
 
@@ -204,6 +209,9 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {Coma} {lexeme=yytext(); return Coma;}
     {Exponente} {lexeme=yytext(); return Exponente;}
     {OPARBool} {lexeme=yytext(); return OPARBool;}
+    //{Parentesis} {lexeme=yytext(); return Parentesis;}
+    //{Llaves} {lexeme=yytext(); return Llaves;}
+
 //{Op_logico} {lexeme=yytext(); return Op_logico;}
 
 /*---------------------------------------Palabras reservadas------------------------------------*/
@@ -277,28 +285,27 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {ErrorNum} {lexeme=yytext(); return ErrorNum;}
     {ErrorDec} {lexeme=yytext(); return ErrorDec;}
     {ErrorCom} {lexeme=yytext(); return ErrorCom;}
-    {ErrorComa} {lexeme=yytext(); return ErrorComa;}
+    //{ErrorComa} {lexeme=yytext(); return ErrorComa;}
     {ErrorOp_IN} {lexeme=yytext(); return ErrorOp_IN;}
     {ErrorOp_Rel} {lexeme=yytext(); return ErrorOp_Rel;}
     {ErrorOp_Atr} {lexeme=yytext(); return ErrorOp_Atr;}
-    {ErrorPar_a} {lexeme=yytext(); return ErrorPar_a;}
-    {ErrorPar_c} {lexeme=yytext(); return ErrorPar_c;}
-    {ErrorPun} {lexeme=yytext(); return ErrorPun;}
-    {ErrorLL_a} {lexeme=yytext(); return ErrorLL_a;}
-    {ErrorLL_c} {lexeme=yytext(); return ErrorLL_c;}
-    {ErrorCo_a} {lexeme=yytext(); return ErrorCo_a;}
-    {ErrorCo_c} {lexeme=yytext(); return ErrorCo_c;}
-    {ErrorP_C} {lexeme=yytext(); return ErrorP_C;}
-    {ErrorD_pu} {lexeme=yytext(); return ErrorD_pu;}
-    {ErrorMul} {lexeme=yytext(); return ErrorMul;}
-    {ErrorMod} {lexeme=yytext(); return ErrorMod;}
-    {ErrorExp} {lexeme=yytext(); return ErrorExp;}
-    {ErrorSum} {lexeme=yytext(); return ErrorSum;}
-    {ErrorRes} {lexeme=yytext(); return ErrorRes;}
+    //{ErrorPar_a} {lexeme=yytext(); return ErrorPar_a;}
+    //{ErrorPar_c} {lexeme=yytext(); return ErrorPar_c;}
+    //{ErrorPun} {lexeme=yytext(); return ErrorPun;}
+    //{ErrorLL_a} {lexeme=yytext(); return ErrorLL_a;}
+    //{ErrorLL_c} {lexeme=yytext(); return ErrorLL_c;}
+    //{ErrorCo_a} {lexeme=yytext(); return ErrorCo_a;}
+    //{ErrorCo_c} {lexeme=yytext(); return ErrorCo_c;}
+    //{ErrorP_C} {lexeme=yytext(); return ErrorP_C;}
+    //{ErrorD_pu} {lexeme=yytext(); return ErrorD_pu;}
+    {ErrorDiv} {lexeme=yytext(); return ErrorDiv;}
     {ErrorOPARBo} {lexeme=yytext(); return ErrorOPARBo;}
     {ErrorSig} {lexeme=yytext(); return ErrorSig;}
     //{ErrorSig2} {lexeme=yytext(); return ErrorSig2;}
     {ErrorID} {lexeme=yytext(); return ErrorID;}
+    {ErrorSIGNOS} {lexeme=yytext(); return ErrorSIGNOS;}
+    {ErrorSIGNOS1} {lexeme=yytext(); return ErrorSIGNOS1;}
+    {ErrorSIGNOS2} {lexeme=yytext(); return ErrorSIGNOS2;}
 
 /* Error de analisis */
  . {return ERROR;}
