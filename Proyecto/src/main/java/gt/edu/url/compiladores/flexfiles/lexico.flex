@@ -7,7 +7,6 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 /*----------------------------------COMENTARIOS----------------------------------------------*/
     LineTerminator = \r|\n|\r\n
     InputCharacter = [^\r\n]
-    /* comments */
     Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
     TraditionalComment   = "/*" [^*] ~"*/" | "/*" "*"+ "/"
     EndOfLineComment     = "//" {InputCharacter}* {LineTerminator}?
@@ -15,7 +14,6 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     CommentContent       = ( [^*] | \*+ [^/*] )*
 /*-------------------------------------Asignación de valores ---------------------------------*/
     L = [a-z][a-zA-Z_]*
-    //L = [a-zA-Z_]+
     D = [0-9]+
     D1 = [1-9]+
     D0 = "0"
@@ -96,8 +94,6 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 
     Clase = "clase"
     NameClass = {l}({l}|{D})*
-   // CallFunofClss = {Identificador}{Punto}{Identificador}
-
 /*--------------------------------------------Instancias------------------------------------------*/
 
     Instanciar = "instanciar"
@@ -136,35 +132,30 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     ErrorNum = ({Numero}|{ErrorCer}){Identificador}+
     ErrorDec = ({D0}|{ErrorCer}|{Numero})({Coma}|{ErrorPun}|{Punto})({Numero}|{D0}{3}{D0}*|{D0})
     ErrorCom = {Comillas}{2}{Comillas}+
-    SimbGlob = ({ErrorSignos}|{ErrorSig}|{Errorand}|{Erroror}|{ErrorSigBas}|{Division}|{GuionMe}|{Sigual}|{Neg}|{MayMen})
-    ErrorOp_IN = {Op_incremento}({Op_incremento}|{Suma}|{Resta})+
-    ErrorOp_Rel = {Op_relacional}{Op_relacional}+
-    ErrorOp_Atr = {Op_atribucion}{Op_atribucion}+
+    SimbGlob = ({ErrorSignos1}|{ErrorSig}|{Errorand}|{Erroror}|{ErrorSigBas}|{Division}|{GuionMe}|{Sigual}|{Neg}|{MayMen})
+    ErrorOp_IN = {Op_incremento}({Op_incremento}/*|{Suma}|{Resta}*/|{AgrupSimGlob})+
+    ErrorOp_Rel = {Op_relacional}({Op_relacional}|{AgrupSimGlob})+
+    ErrorOp_Atr = {Op_atribucion}({Op_atribucion}|{AgrupSimGlob})+
     ErrorPun = {Punto}{Punto}+
     ErrorSigBas = ({Exponente}|{Mod}|{Suma}|{Resta}|{Multiplicacion})+
     ErrorSignos = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{Corchete_a}|{Corchete_c}|{P_coma}|{Dos_puntos}|{Parentesis_a}|{Parentesis_c})+
+    ErrorSignos1 = ({Coma}|{Llave_a}|{Llave_c}|{Corchete_a}|{Corchete_c}|{P_coma}|{Dos_puntos}|{Parentesis_a}|{Parentesis_c})+
     ErrorSignos2 = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{P_coma}|{Dos_puntos})+
-    
-    ErrorSIGNOS = ({ErrorSignos2}|{Corchete_c}|{Parentesis_c})+{ErrorSignos}+//{1}{SimbGlob}*
-    ErrorSIGNOS1 = {Parentesis_a}({ErrorSignos2}|{Corchete_a}|{Parentesis_a})+({SimbGlob}|{GuionMe})*//{ErrorSignos}
-    ErrorSIGNOS2 = {Corchete_a}({Corchete_a}|{ErrorSignos2}|{Parentesis_a}|{Parentesis_c})+({SimbGlob}|{GuionMe})*//{ErrorSignos}* 
-    
+    AgrupSimGlob = ({SimbGlob}|{GuionMe}|{Punto})
+    ErrorSIGNOS = ({ErrorSignos2}|{Corchete_c}|{Parentesis_c})+{ErrorSignos}+/*{1}*/{AgrupSimGlob}*
+    ErrorSIGNOS1 = {Parentesis_a}({ErrorSignos2}|{Corchete_a}|{Parentesis_a})+{AgrupSimGlob}*//{ErrorSignos}
+    ErrorSIGNOS2 = {Corchete_a}({Corchete_a}|{ErrorSignos2}|{Parentesis_a}|{Parentesis_c})+{AgrupSimGlob}*//{ErrorSignos}* 
     Errorand = "&"
     Erroror = "|"
-    ErrorOPARBo = {Errorand}{2}({Errorand}|{Erroror})+({GuionMe}|{SimbGlob})*|{Erroror}{2}({Errorand}|{Erroror})+({GuionMe}|{SimbGlob})*|{Erroror}({GuionMe}|{SimbGlob})*|{Errorand}({GuionMe}|{SimbGlob})*
+    ErrorOPARBo = {Errorand}{2}({Errorand}|{Erroror})+{AgrupSimGlob}*|{Erroror}{2}({Errorand}|{Erroror})+{AgrupSimGlob}*|{Erroror}{AgrupSimGlob}*|{Errorand}{AgrupSimGlob}*
     ErrorArr = "@"
     ErrorHash = "#"
     ErrorDoll = "$"
     ErrorSig = ({ErrorArr}|{ErrorHash}|{ErrorDoll})+([^*])*
-    ErrorSigP = ({Division}{1}{ErrorSigBas}+)+|(({ErrorSigBas}+{Division}{1})+|{ErrorSigBas}+)+    
-//ErrorSig2 = ({ErrorOPARBo}/*|{Errorand}{2}|{Erroror}{2}*/)+([^*])+
-//    ErrorID = {Identificador}({Division}|({ErrorSig}|{ErrorSigP})+)|({ErrorSig}|{GuionMe})+({Identificador}|[^*])+
-    ErrorID = ({Identificador}({SimbGlob})+|({SimbGlob}|{GuionMe})+({Identificador}/*|[^*]*/)+){SimbGlob}*
+    ErrorSigP = (({Division}{1}{ErrorSigBas}+)+|(({ErrorSigBas}+{Division}{1})+|{ErrorSigBas}+)+){AgrupSimGlob}*   
+    ErrorID = ({Identificador}{SimbGlob}+|({SimbGlob}|{GuionMe})+{Identificador}+){AgrupSimGlob}*
+    ErrorNameClss = ({NameClass}{SimbGlob}+|({SimbGlob}|{GuionMe})+{NameClass}+){AgrupSimGlob}*
     
-    
-
-//Variables_enteras = {Entero}{Identificador}({Sigual}{Numero}{SaltoL}|{SaltoL})
-//Variables_reales = {Real}{Identificador}
 %{
     public String lexeme;
 %}
@@ -197,7 +188,6 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {Coma} {lexeme=yytext(); return Coma;}
     {Exponente} {lexeme=yytext(); return Exponente;}
     {OPARBool} {lexeme=yytext(); return OPARBool;}
-//{Op_logico} {lexeme=yytext(); return Op_logico;}
 
 /*---------------------------------------Palabras reservadas------------------------------------*/
     {T_dato} {lexeme=yytext(); return T_dato;}
@@ -239,7 +229,6 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 /*----------------------------------------------Clases-------------------------------------------*/
     {Clase} {lexeme=yytext(); return Clase;}
     {NameClass} {lexeme=yytext(); return NameClass;}
-    //{CallFunofClss} {lexeme=yytext(); return CallFunofClss;}
 
 /*--------------------------------------------Instancias------------------------------------------*/
     {Instanciar} {lexeme=yytext(); return Instanciar;}
@@ -277,8 +266,8 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     {ErrorSigP} {lexeme=yytext(); return ErrorSigP;}
     {ErrorOPARBo} {lexeme=yytext(); return ErrorOPARBo;}
     {ErrorSig} {lexeme=yytext(); return ErrorSig;}
-    //{ErrorSig2} {lexeme=yytext(); return ErrorSig2;}
     {ErrorID} {lexeme=yytext(); return ErrorID;}
+    {ErrorNameClss} {lexeme=yytext(); return ErrorNameClss;}
     {ErrorSIGNOS} {lexeme=yytext(); return ErrorSIGNOS;}
     {ErrorSIGNOS1} {lexeme=yytext(); return ErrorSIGNOS1;}
     {ErrorSIGNOS2} {lexeme=yytext(); return ErrorSIGNOS2;}

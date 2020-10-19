@@ -6,6 +6,7 @@ package gt.edu.url.compiladores.prueba1;
  * and open the template in the editor.
  */
 import gt.edu.url.compiladores.clases.Informacion;
+import gt.edu.url.compiladores.clases.TheTokens;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
@@ -103,11 +104,14 @@ public class Interfaz extends javax.swing.JFrame {
         // }
     }
 
-    private void compilar(String nombreArchivo) {
+    private void compilar(String nombreArchivo, String nuevaruta) {
         int cont = 1;
+        boolean error = false;
+
         File archivo;
         FileReader fr;
         BufferedReader br;
+        jTextArea2.setText(null);
         try {
             archivo = new File(nombreArchivo);
             fr = new FileReader(archivo);
@@ -120,6 +124,13 @@ public class Interfaz extends javax.swing.JFrame {
                 if (token == null) {
                     resultado += "FIN";
                     jTextArea2.append(resultado);
+                    //jTextArea2.set(Color.ORANGE);
+
+                    if (error == false) {
+                        System.out.println("Sin errores");
+                        TheTokens thetokens = new TheTokens();
+                        thetokens.Guardar_Archivo(nuevaruta + ".loop", resultado);
+                    }
                     return;
                 }
                 switch (token) {
@@ -217,9 +228,6 @@ public class Interfaz extends javax.swing.JFrame {
                     case Devolver:
                         resultado += "  <Reservada Devolver>\t\t" + compilador.lexeme + "\n";
                         break;
-                    /*case Op_logico:
-                        resultado += "  <Operador logico>\t" + compilador.lexeme + "\n";
-                        break;*/
                     case Op_incremento:
                         resultado += "  <Operador incremento|decremento>\t" + compilador.lexeme + "\n";
                         break;
@@ -237,7 +245,7 @@ public class Interfaz extends javax.swing.JFrame {
                         break;
                     case Parentesis_c:
                         resultado += "  <Paréntesis de cierre>\t\t" + compilador.lexeme + "\n";
-                        break;    
+                        break;
                     case Llave_a:
                         resultado += "  <Llave de apertura>\t\t" + compilador.lexeme + "\n";
                         break;
@@ -249,7 +257,7 @@ public class Interfaz extends javax.swing.JFrame {
                         break;
                     case Corchete_c:
                         resultado += "  <Corchete de cierre>\t\t" + compilador.lexeme + "\n";
-                        break;   
+                        break;
                     case Principal:
                         resultado += "  <Reservada Main>\t\t" + compilador.lexeme + "\n";
                         break;
@@ -277,9 +285,6 @@ public class Interfaz extends javax.swing.JFrame {
                     case NameClass:
                         resultado += "  <Nombre de una clase>\t\t" + compilador.lexeme + "\n";
                         break;
-                    /*case CallFunofClss:
-                        resultado += "  <Llamado a una función>\t\t" + compilador.lexeme + "\n";
-                        break;*/    
                     case Punto:
                         resultado += "  <Opunto Punto>\t\t" + compilador.lexeme + "\n";
                         break;
@@ -312,100 +317,74 @@ public class Interfaz extends javax.swing.JFrame {
                         break;
                     case ErrorCer:
                         resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
+                        error = true;
                         break;
                     case ErrorNum:
                         resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
+                        error = true;
                         break;
                     case ErrorDec:
                         resultado += "  <Número mal escrito>\t\t" + compilador.lexeme + "\n";
+                        error = true;
                         break;
-                    case ErrorComa:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
+                    case ErrorCom:
+                        resultado += "  <Símbolo no valido com>\t\t" + compilador.lexeme + "\n";
+                        error = true;
                         break;
                     case ErrorOp_IN:
                         resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        error = true;
                         break;
                     case ErrorOp_Rel:
                         resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        error = true;
                         break;
                     case ErrorOp_Atr:
                         resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorPar_a:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorPar_c:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorPun:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorLL_a:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorLL_c:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorCo_a:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorCo_c:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorP_C:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorD_pu:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorMul:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorMod:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        error = true;
                         break;
                     case ErrorSigP:
                         resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        error = true;
                         break;
-                    case ErrorExp:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;   
-                    case ErrorSum:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorRes:
-                        resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
-                        break;     
                     case ErrorOPARBo:
                         resultado += "  <Símbolo no valido>\t\t" + compilador.lexeme + "\n";
+                        error = true;
                         break;
                     case ErrorSig:
                         resultado += "  <Signos inválidos>\t\t" + compilador.lexeme + "\n";
-                        break;
-                    case ErrorSig2:
-                        resultado += "  <Signos inválidos>\t\t" + compilador.lexeme + "\n";
+                        error = true;
                         break;
                     case ErrorSIGNOS:
                         resultado += "  <Signos inválidos S>\t\t" + compilador.lexeme + "\n";
-                        break;                        
+                        error = true;
+                        break;
                     case ErrorSIGNOS1:
                         resultado += "  <Signos inválidos S1>\t\t" + compilador.lexeme + "\n";
-                        break; 
+                        error = true;
+                        break;
                     case ErrorSIGNOS2:
                         resultado += "  <Signos inválidos S2>\t\t" + compilador.lexeme + "\n";
-                        break; 
+                        error = true;
+                        break;
                     case ErrorID:
                         resultado += "  <Variable mal escrita>\t\t" + compilador.lexeme + "\n";
-                        break;                        
+                        error = true;
+                        break;
+                    case ErrorNameClss:
+                        resultado += "  <Clase mal escrita>\t\t" + compilador.lexeme + "\n";
+                        error = true;
+                        break;
                     case ERROR:
                         resultado += "  <Simbolo no definido>\n";
+                        error = true;
                         break;
                     default:
                         resultado += "  < " + compilador.lexeme + " >\n";
+                        error = true;
                         break;
                 }
             }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERRRO LEYENDO ARCHIVO" + e);
         }
@@ -610,6 +589,7 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
         //JTextArea t = new JTextArea();
         //JScrollPane pn = new JScrollPane();
+        TheTokens thetokens = new TheTokens();
         int index = jTabbedPane1.getSelectedIndex();
         String nombre = jTabbedPane1.getTitleAt(index);
         //JTextArea t = (JTextArea) jTabbedPane1.getComponent(index);
@@ -626,7 +606,8 @@ public class Interfaz extends javax.swing.JFrame {
             if (info.getNombre().equals(nombre)) {
                 if (info.getNombrecarpeta().equals(carpetaactiva)) {
                     rutaactiva = info.getRuta();
-                    compilar(rutaactiva);
+                    String nuevaruta = thetokens.separarExtencion(rutaactiva);
+                    compilar(rutaactiva, nuevaruta);
                     //jTabbedPane1.add("prueba1", txt);
 
                 }
