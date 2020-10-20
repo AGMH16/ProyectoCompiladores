@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -27,22 +28,32 @@ import javax.swing.JTextArea;
  */
 public class Informacion {
 
-    private String ruta, contenido, nombre, nombrecarpeta;
+    private String RutaCarpeta, ruta, contenido, nombre, nombrecarpeta;
     private Informacion siguiente;
     private JTextArea t = new JTextArea();
 
     public Informacion() {
+        this.RutaCarpeta = "";
         this.nombrecarpeta = "";
         this.ruta = "";
         this.nombre = "";
         this.contenido = "";
     }
 
-    public Informacion(String nombrecarpeta, String ruta, String nombre, String contenido) {
+    public Informacion(String RutaCarpeta, String nombrecarpeta, String ruta, String nombre, String contenido) {
+        this.RutaCarpeta = RutaCarpeta;
         this.nombrecarpeta = nombrecarpeta;
         this.ruta = ruta;
         this.nombre = nombre;
         this.contenido = contenido;
+    }
+
+    public String getRutaCarpeta() {
+        return RutaCarpeta;
+    }
+
+    public void setRutaCarpeta(String RutaCarpeta) {
+        this.RutaCarpeta = RutaCarpeta;
     }
 
     public String getNombrecarpeta() {
@@ -116,7 +127,7 @@ public class Informacion {
             }
             br.close();
             fr.close();*/
-            FileInputStream fis = new FileInputStream(ruta);
+            FileInputStream fis = new FileInputStream(nombreArchivo);
             InputStreamReader is = new InputStreamReader(fis, "ISO-8859-1");
             BufferedReader bf = new BufferedReader(is);
             String linea;
@@ -137,13 +148,13 @@ public class Informacion {
 
     }
 
-    public void Guardar_Archivo(String ruta, String texto ) {
+    public void Guardar_Archivo(String ruta, String texto) {
         //FileWriter w;
         //BufferedWriter bw;
         //PrintWriter wr;
         try {
             FileOutputStream x = new FileOutputStream(ruta);
-            OutputStreamWriter y = new OutputStreamWriter(x , "ISO-8859-1");
+            OutputStreamWriter y = new OutputStreamWriter(x, "ISO-8859-1");
             y.append(texto);
             y.close();
 
@@ -151,7 +162,8 @@ public class Informacion {
             JOptionPane.showMessageDialog(null, "ERRRO" + e);
         }
     }
-     public void Guardar_Archivo2(String ruta, String texto ) {
+
+    public void Guardar_Archivo2(String ruta, String texto) {
         FileWriter w;
         BufferedWriter bw;
         PrintWriter wr;
@@ -166,5 +178,14 @@ public class Informacion {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERRRO" + e);
         }
+    }
+
+    public static void Crear(String ruta, String texto) throws IOException {
+        FileWriter w = new FileWriter(ruta/*, true*/);
+
+        w.write(texto);
+        w.close();
+        System.out.println("texto creado");
+
     }
 }

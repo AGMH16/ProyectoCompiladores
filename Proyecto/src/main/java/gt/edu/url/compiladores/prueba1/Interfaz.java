@@ -27,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -59,6 +60,7 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void obtener_todos_los_archivos(File archivo) throws IOException {
         String nombrecarpeta = archivo.getName();
+        System.out.println("RUTA COMPLETA" + archivo.getAbsolutePath());
         System.out.println("NOMBRE CARPETA " + nombrecarpeta);
         modeloLista.addElement(nombrecarpeta);
         File lista_de_archivos[] = archivo.listFiles();
@@ -74,6 +76,7 @@ public class Interfaz extends javax.swing.JFrame {
                         System.out.println(lista_de_archivos[i].getName());
                         modeloLista.addElement("    " + lista_de_archivos[i].getName());
                         proyectos.add(new Informacion());
+                        proyectos.get(proyectos.size() - 1).setRutaCarpeta(archivo.getAbsolutePath());
                         proyectos.get(proyectos.size() - 1).setNombrecarpeta(nombrecarpeta);
                         proyectos.get(proyectos.size() - 1).setRuta(lista_de_archivos[i].getAbsolutePath());
                         proyectos.get(proyectos.size() - 1).setNombre(lista_de_archivos[i].getName());
@@ -83,6 +86,7 @@ public class Interfaz extends javax.swing.JFrame {
                 }
             }
         }
+        rutaactiva = archivo.getAbsolutePath();
 
     }
 
@@ -123,13 +127,18 @@ public class Interfaz extends javax.swing.JFrame {
                 Token token = compilador.yylex();
                 if (token == null) {
                     resultado += "FIN";
-                    jTextArea2.append(resultado);
+                    //jTextArea2.append(resultado);
                     //jTextArea2.set(Color.ORANGE);
 
                     if (error == false) {
                         System.out.println("Sin errores");
                         TheTokens thetokens = new TheTokens();
                         thetokens.Guardar_Archivo(nuevaruta + ".loop", resultado);
+                        jTextArea2.append(resultado);
+                        jTextArea2.setForeground(Color.blue);
+                    } else {
+                        jTextArea2.append(resultado);
+                        jTextArea2.setForeground(Color.red);
                     }
                     return;
                 }
@@ -399,6 +408,8 @@ public class Interfaz extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu2 = new java.awt.PopupMenu();
+        menuItem1 = new java.awt.MenuItem();
         jFileChooser1 = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -412,6 +423,15 @@ public class Interfaz extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+
+        popupMenu2.setLabel("popupMenu2");
+
+        menuItem1.setLabel("Nuevo Archivo");
+        menuItem1.setName("");
+        popupMenu2.add(menuItem1);
+
+        popupMenu2.getAccessibleContext().setAccessibleParent(jPanel2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -438,6 +458,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jList1);
+        jList1.getAccessibleContext().setAccessibleParent(jScrollPane2);
 
         jButton2.setBackground(new java.awt.Color(0, 102, 102));
         jButton2.setText("Abrir proyecto");
@@ -522,6 +543,13 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("jButton5");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -538,6 +566,8 @@ public class Interfaz extends javax.swing.JFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton5)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
@@ -547,10 +577,13 @@ public class Interfaz extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton5))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -604,28 +637,101 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
         // modeloLista.
         //jList1.setModel(modeloLista);
-        String busqueda = jList1.getSelectedValue().trim();
-        System.out.println("busqueda" + busqueda);
-        for (Informacion info : proyectos) {
-            System.out.println("CARPETA------: " + carpetaactiva);
-            System.out.println("RUTA---------: " + rutaactiva);
-            System.out.println("ARCHIVO------: " + info.getNombre());
-            if (info.getNombre().equals(busqueda)) {
-                if (info.getNombrecarpeta().equals(carpetaactiva)) {
-                    System.out.println("Si selecciono todo de forma correcta ");
-                    System.out.println("CARPETA: " + carpetaactiva);
-                    rutaactiva = info.getRuta();
-                    System.out.println("RUTA: " + rutaactiva);
-                    System.out.println("ARCHIVO: " + info.getNombre());
-                    pn = info.Lectura_de_proyectos(busqueda, rutaactiva, jTabbedPane1);
+        if (evt.isMetaDown()) {
+            String busqueda = jList1.getSelectedValue();
+            System.out.println("Busqueda-- " + busqueda);
+
+            System.out.println("derecho");
+            String nuevoarchivo = JOptionPane.showInputDialog("Nuevo archivo. Agregue nombre.", JOptionPane.QUESTION_MESSAGE);
+            System.out.println(nuevoarchivo);
+            if (nuevoarchivo.equals("") || nuevoarchivo.equals(" ")) {
+                nuevoarchivo = JOptionPane.showInputDialog("Nuevo archivo. Agregué nombre.", JOptionPane.QUESTION_MESSAGE);
+            } else {
+                try {
+                    /* proyectos.get(proyectos.size() - 1).setRuta(rutaCarpeta + nuevoarchivo + ".txt");
+                    proyectos.get(proyectos.size() - 1).setNombre(nuevoarchivo + ".txt");
+                    proyectos.get(proyectos.size() - 1).Guardar_Archivo(rutaCarpeta + nuevoarchivo + ".txt", "entero Principal ()");
+                    modeloLista.addElement("    " + nuevoarchivo + ".txt");
+                    jList1.setModel(modeloLista);*/
+                    //String busqueda = jList1.getSelectedValue().trim();
+                    System.out.println("busqueda" + busqueda);
+                    System.out.println("nuevoarchivo---" + nuevoarchivo);
+                    System.out.println("Ruta activa--" + rutaactiva);
+                    modeloLista.addElement("    " + nuevoarchivo + ".txt");
+                    proyectos.add(new Informacion());
+                    proyectos.get(proyectos.size() - 1).setRutaCarpeta(rutaactiva);
+                    proyectos.get(proyectos.size() - 1).setNombrecarpeta(busqueda);
+                    String rut = rutaactiva +"/"+ nuevoarchivo + ".txt";
+                    proyectos.get(proyectos.size() - 1).setRuta(rut);
+                    proyectos.get(proyectos.size() - 1).setNombre(nuevoarchivo + ".txt");
+                    proyectos.get(proyectos.size() - 1).setContenido("entero Principal ()");
+                    proyectos.get(proyectos.size() - 1).Crear(rut, "entero Principal ()");
+                    //pn = proyectos.get(proyectos.size() - 1).Lectura_de_proyectos(rut,nuevoarchivo + ".txt", jTabbedPane1);
+                    //t = info.getT();
+                    jList1.setModel(modeloLista);
+
+                    /* for (Informacion info : proyectos) {
+                    System.out.println("*CARPETAACTIVA------: " + carpetaactiva);
+                    System.out.println("*RUTAACTIVA---------: " + rutaactiva);
+                    System.out.println("*ARCHIVO------: " + info.getNombre());
+                    System.out.println("*CARPETANOMBRE "+ info.getNombrecarpeta());
+                    System.out.println("*Ruta"+ info.getRuta());
+                    /* if (busqueda.equals(info.getNombrecarpeta())) {
+                    System.out.println("entraaaa");
+                    carpetaactiva = info.getNombrecarpeta();
+                    rutaactiva = info.getRutaCarpeta();
+                    info.setNombre(nuevoarchivo + ".txt");
+                    info.setRuta(rutaactiva + nuevoarchivo + ".txt");
+                    info.Guardar_Archivo(rutaactiva + nuevoarchivo + ".txt", "entero Principal ()");
+                    //proyectos.get(proyectos.size() - 1).setRuta(rutaactiva + nuevoarchivo + ".txt");
+                    //proyectos.get(proyectos.size() - 1).setNombre(nuevoarchivo + ".txt");
+                    //proyectos.get(proyectos.size() - 1).Guardar_Archivo(rutaactiva + nuevoarchivo + ".txt", "entero Principal ()");
+                    modeloLista.addElement("    " + nuevoarchivo + ".txt");
+                    jList1.setModel(modeloLista);
+                    pn = info.Lectura_de_proyectos(nuevoarchivo + ".txt", rutaactiva + nuevoarchivo + ".txt", jTabbedPane1);
                     t = info.getT();
-                    //jTabbedPane1.add("prueba1", txt);
+                    //rutaactiva = info.getRuta();
+                    }
+                    
+                    }*/
+                } catch (IOException ex) {
+                    Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else if (busqueda.equals(info.getNombrecarpeta())) {
-                carpetaactiva = info.getNombrecarpeta();
-                //rutaactiva = info.getRuta();
             }
+        } else if (evt.isAltDown()) {
+            System.out.println("alt o scroll");
+        } else if (evt.isShiftDown()) {
+            System.out.println("click+shift");
+        } else //indica si se hizo click izquierdo con el mouse
+        //lbl_salida.setText(“Click Izquierdo del mouse”);
+        {
+            String busqueda = jList1.getSelectedValue().trim();
+            System.out.println("busqueda->" + busqueda);
+            for (Informacion info : proyectos) {
+                System.out.println("CARPETA------: " + carpetaactiva);
+                System.out.println("RUTA---------: " + rutaactiva);
+                System.out.println("ARCHIVO------: " + info.getNombre());
+                if (info.getNombre().equals(busqueda)) {
+                    if (info.getNombrecarpeta().equals(carpetaactiva)) {
+                        System.out.println("Si selecciono todo de forma correcta ");
+                        System.out.println("CARPETA: " + carpetaactiva);
+                        String ruta = info.getRuta();
+                        System.out.println("RUTA: " + rutaactiva);
+                        System.out.println("ARCHIVO: " + info.getNombre());
+                        pn = info.Lectura_de_proyectos(busqueda, ruta, jTabbedPane1);
+                        t = info.getT();
+                        //jTabbedPane1.add("prueba1", txt);
+                    }
+                } else if (busqueda.equals(info.getNombrecarpeta())) {
+                    carpetaactiva = info.getNombrecarpeta();
+                    rutaactiva = info.getRutaCarpeta();
+                    System.out.println("LA RUTA ACTIVA " + rutaactiva);
+                }
+            }
+            System.out.println("izquierzo con mouse ");
         }
+
+
     }//GEN-LAST:event_jList1MouseClicked
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
@@ -644,16 +750,16 @@ public class Interfaz extends javax.swing.JFrame {
                 if (info.getNombrecarpeta().equals(carpetaactiva)) {
                     System.out.println("Si selecciono todo de forma correcta ");
                     System.out.println("CARPETA: " + carpetaactiva);
-                    rutaactiva = info.getRuta();
+                    String ruta = info.getRuta();
                     System.out.println("RUTA: " + rutaactiva);
                     System.out.println("ARCHIVO: " + info.getNombre());
-                    info.Guardar_Archivo(rutaactiva, texto);
+                    info.Guardar_Archivo(ruta, texto);
                     //t = info.getT();
                     //jTabbedPane1.add("prueba1", txt);
                 }
             } else if (busqueda.equals(info.getNombrecarpeta())) {
                 carpetaactiva = info.getNombrecarpeta();
-                //rutaactiva = info.getRuta();
+                rutaactiva = info.getRutaCarpeta();
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -679,7 +785,20 @@ public class Interfaz extends javax.swing.JFrame {
         File archivo = new File(ruta);
         String nombrecarpeta = archivo.getName();
         modeloLista.addElement(nombrecarpeta);
+        //int tamaño = ruta.length();
+        //String extencion = lista_de_archivos[i].getCanonicalPath().substring(tamaño - 3, tamaño);
+        /*if (extencion.equals("txt")) {
+            System.out.println(lista_de_archivos[i].getAbsolutePath());
+            System.out.println(lista_de_archivos[i].getName());
+            modeloLista.addElement("    " + lista_de_archivos[i].getName());*/
+        proyectos.add(new Informacion());
+        proyectos.get(proyectos.size() - 1).setRutaCarpeta(archivo.getAbsolutePath());
+        proyectos.get(proyectos.size() - 1).setNombrecarpeta(nombrecarpeta);
+        //proyectos.get(proyectos.size() - 1).setRuta(.getAbsolutePath());
+        //proyectos.get(proyectos.size() - 1).setNombre(lista_de_archivos[i].getName());
+        jList1.setModel(modeloLista);
 
+        // }
         //File c= new File(ruta);
         //jFileChooser1.setF(c);
         /*obtener_todos_los_archivos(new File(ruta));
@@ -710,6 +829,18 @@ public class Interfaz extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        for (Informacion info : proyectos) {
+            System.out.println(info.getRuta());
+            System.out.println(info.getNombre());
+            System.out.println(info.getRutaCarpeta());
+            System.out.println(info.getNombre());
+            System.out.println(info.getContenido());
+
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -757,6 +888,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
@@ -766,5 +898,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea2;
+    private java.awt.MenuItem menuItem1;
+    private java.awt.PopupMenu popupMenu2;
     // End of variables declaration//GEN-END:variables
 }

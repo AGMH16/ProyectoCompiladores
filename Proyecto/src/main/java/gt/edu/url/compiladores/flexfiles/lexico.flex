@@ -123,12 +123,12 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
 
 /*-------------------------------------------Variables y Números----------------------------------*/
     Identificador = {L}({L}|{D})*
-    Numero = {Resta}{D1}{D}*|{D1}{D}*|{D0}|{D0}{D1}
+    Numero = {Resta}{D1}{D}*|{D1}{D}*|{D0}//|{D0}{D1}
     Decimal = ({D1}{1}{D}*|{D0}){Punto}({D}*{D1}{D0}{0,1}|{D0}{2}|{D}*{D1}{D0}{2})
 /*-------------------------------------------Cadenas de Texto-------------------------------------*/
     Texto = {Comillas} [^*] ~{Comillas} | {Comillas}{Comillas}
 /*----------------------------------------------Errores-------------------------------------------*/
-    ErrorCer = {D0}{D0}+|{D0}{D0}+{D1}
+    ErrorCer = {D0}{D0}+|{D0}{D0}+{D1}|{D0}{D1}
     ErrorNum = ({Numero}|{ErrorCer}){Identificador}+
     ErrorDec = ({D0}|{ErrorCer}|{Numero})({Coma}|{ErrorPun}|{Punto})({Numero}|{D0}{3}{D0}*|{D0})
     ErrorCom = {Comillas}{2}{Comillas}+
