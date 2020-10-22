@@ -139,9 +139,9 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     ErrorPun = {Punto}{Punto}+
     ErrorSigBas = ({Exponente}|{Mod}|{Suma}|{Resta}|{Multiplicacion})+
     ErrorSignos = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{Corchete_a}|{Corchete_c}|{P_coma}|{Dos_puntos}|{Parentesis_a}|{Parentesis_c})+
-    ErrorSignos1 = ({Coma}|{Llave_a}|{Llave_c}|{Corchete_a}|{Corchete_c}|{P_coma}|{Dos_puntos}|{Parentesis_a}|{Parentesis_c})+
+    ErrorSignos1 = ({Coma}|{Llave_a}|{Llave_c}|{Corchete_a}|{Corchete_c}|{P_coma}|{Dos_puntos}/*|{Parentesis_a}|{Parentesis_c}*/)+
     ErrorSignos2 = ({Coma}|{Punto}|{Llave_a}|{Llave_c}|{P_coma}|{Dos_puntos})+
-    AgrupSimGlob = ({SimbGlob}|{GuionMe}|{Punto})
+    AgrupSimGlob = ({SimbGlob}|{GuionMe}|{Punto}|{Parentesis_a}|{Parentesis_c})
     ErrorSIGNOS = ({ErrorSignos2}|{Corchete_c}|{Parentesis_c})+{ErrorSignos}+/*{1}*/{AgrupSimGlob}*
     ErrorSIGNOS1 = {Parentesis_a}({ErrorSignos2}|{Corchete_a}|{Parentesis_a})+{AgrupSimGlob}*//{ErrorSignos}
     ErrorSIGNOS2 = {Corchete_a}({Corchete_a}|{ErrorSignos2}|{Parentesis_a}|{Parentesis_c})+{AgrupSimGlob}*//{ErrorSignos}* 
@@ -153,8 +153,11 @@ import static gt.edu.url.compiladores.prueba1.Token.*;
     ErrorDoll = "$"
     ErrorSig = ({ErrorArr}|{ErrorHash}|{ErrorDoll})+([^*])*
     ErrorSigP = (({Division}{1}{ErrorSigBas}+)+|(({ErrorSigBas}+{Division}{1})+|{ErrorSigBas}+)+){AgrupSimGlob}*   
-    ErrorID = ({Identificador}{SimbGlob}+|({SimbGlob}|{GuionMe})+{Identificador}+){AgrupSimGlob}*
-    ErrorNameClss = ({NameClass}{SimbGlob}+|({SimbGlob}|{GuionMe})+{NameClass}+){AgrupSimGlob}*
+    //ErrorID = ({Identificador}{SimbGlob}+|({SimbGlob}|{GuionMe})+{Identificador}+){AgrupSimGlob}*
+    //ErrorNameClss = ({NameClass}{SimbGlob}+|({SimbGlob}|{GuionMe})+{NameClass}+){AgrupSimGlob}*
+    
+    ErrorID = ({Identificador}({ErrorSig}|{Llave_a}|{Llave_c})+|({ErrorSig}|{Llave_a}|{Llave_c}|{GuionMe})+{Identificador}+){AgrupSimGlob}*
+    ErrorNameClss = ({NameClass}({SimbGlob}|{Punto}|{ErrorSig})+|({SimbGlob}|{Punto}|{ErrorSig}|{GuionMe})+{NameClass}+){ErrorSig}*
     
 %{
     public String lexeme;
