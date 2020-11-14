@@ -120,10 +120,15 @@ public class Interfaz extends javax.swing.JFrame {
             archivo = new File(nombreArchivo);
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
-            Lexico compilador = new Lexico(br);
+            //Lexico compilador = new Lexico(br);
+            LexicoCup compilador = new LexicoCup(br);
+            
+            Sintactico sintactico = new Sintactico(compilador);
+            sintactico.parse();
+            
             String resultado = "LINEA " + cont + "\t\t\tSIMBOLO\n";
 
-            while (true) {
+          /*  while (true) {
                 Token token = compilador.yylex();
                 if (token == null) {
                     resultado += "FIN";
@@ -136,6 +141,9 @@ public class Interfaz extends javax.swing.JFrame {
                         thetokens.Guardar_Archivo(nuevaruta + ".loop", resultado);
                         jTextArea2.append(resultado);
                         jTextArea2.setForeground(Color.blue);
+
+                        Sintactico sintactico = new Sintactico(compilador);
+                        sintactico.parse();
                     } else {
                         jTextArea2.append(resultado);
                         jTextArea2.setForeground(Color.red);
@@ -233,7 +241,7 @@ public class Interfaz extends javax.swing.JFrame {
                         break;
                     /* case Para:
                         resultado += "  <Estructura Iterativa For>\t" + compilador.lexeme + "\n";
-                        break;*/
+                        break;
                     case Devolver:
                         resultado += "  <Reservada Devolver>\t\t" + compilador.lexeme + "\n";
                         break;
@@ -393,7 +401,7 @@ public class Interfaz extends javax.swing.JFrame {
                         error = true;
                         break;
                 }
-            }
+            }*/
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERRRO LEYENDO ARCHIVO" + e);
         }
@@ -648,7 +656,7 @@ public class Interfaz extends javax.swing.JFrame {
                     proyectos.add(new Informacion());
                     proyectos.get(proyectos.size() - 1).setRutaCarpeta(rutaactiva);
                     proyectos.get(proyectos.size() - 1).setNombrecarpeta(busqueda);
-                    String rut = rutaactiva +"/"+ nuevoarchivo + ".txt";
+                    String rut = rutaactiva + "/" + nuevoarchivo + ".txt";
                     proyectos.get(proyectos.size() - 1).setRuta(rut);
                     proyectos.get(proyectos.size() - 1).setNombre(nuevoarchivo + ".txt");
                     proyectos.get(proyectos.size() - 1).setContenido("entero Principal ()");

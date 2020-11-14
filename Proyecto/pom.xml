@@ -8,10 +8,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        
-       
-        
+        <maven.compiler.target>11</maven.compiler.target>      
     </properties>
     <build>
         <plugins>
@@ -27,30 +24,35 @@
                         <configuration> 
                             <lexDefinitions>
                                 <lexDefinition>src/main/java/gt/edu/url/compiladores/flexfiles/lexico.flex</lexDefinition>
+                                <lexDefinition>src/main/java/gt/edu/url/compiladores/flexfiles/lexicocup.flex</lexDefinition>                            
                             </lexDefinitions>
                             <outputDirectory>src/main/java</outputDirectory>
-                            <verbose>true</verbose>
+                            <Verbose>true</Verbose>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.1</version>
+                <groupId>com.github.vbmacher</groupId>
+                <artifactId>cup-maven-plugin</artifactId>
+                <version>11b-20160615</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib</classpathPrefix>
-                            <mainClass> gt.edu.url.compiladores.prueba1.Interfaz</mainClass>
-                        </manifest>
-                    </archive>
+                    <className>Sintactico</className>
+                    <symbolsName>sym</symbolsName>
+                    <cupDefinition>src/main/java/gt/edu/url/compiladores/Jcup/sintactico.cup</cupDefinition>
+                    <outputDirectory>src/main/java</outputDirectory>
+                    <noSummary>false</noSummary>
+                    <progress>true</progress>
+                    <debug> true</debug>
                 </configuration>
-            </plugin>
+            </plugin> 
             <!-- ... -->
         </plugins>    
     </build>
@@ -62,7 +64,10 @@
             <version>1.8.2</version>
             <type>jar</type>
         </dependency>
-
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
     </dependencies>
-    <name>Proyecto</name>
 </project>
