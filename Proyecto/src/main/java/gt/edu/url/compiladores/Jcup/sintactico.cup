@@ -25,13 +25,25 @@ terminal String IDENTIFICADOR,CADTEXTO;
 terminal ERRORCERO,ERRORNUM,ERRORDECIM,ERRORCOM,ERROROPINC,ERROREAL,ERRORARIT,
          ERRORSIGP,ERROROPARBO,ERRORSIG,ERRORID,ERRORNAMECLASS,ERRORSIGNOS,
          ERRORSIGNOS1,ERRORSIGNOS2;
+terminal TEXTO;
 non terminal ID, IDCAD, IDINT, IDREAL, IDBOOL, DECVARIABLES, ARREGLOS, DECIMALES , ENTEROS, CADENAS, BOLEANOSTEXT,BOLEANOSNUM;
-non terminal PRUEBAS;
-
+non terminal S,OPERACION,NUMEROS;
+non terminal LECTURA;
+non terminal ESCRITURA , CONTENIDOESCRI;
+non terminal SUMOCOM,ASIGNAR ;
+precedence right SUMA, RESTA, MULTIPLICACION, DIVISION, MOD, EXPONENTE,NUMERO,DECIMAL;
+//precedence right MULTIPLICACION DIVISION, EXPONENTE, MOD;
+//precedence right MULTIPLICACION, DIVISION;
 //start with DECVARIABLES;
-start with ARREGLOS;
+//start with ARREGLOS;
+start with S;
 
-
+S ::= ARREGLOS |
+      DECVARIABLES|
+      //OPERACION|
+      LECTURA|
+      ESCRITURA|
+      ASIGNAR;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**/
 /*Arreglos*/
 ARREGLOS ::= REAL IDENTIFICADOR CORCHETEA CORCHETEC| 
@@ -87,9 +99,65 @@ ARREGLOS ::= REAL IDENTIFICADOR CORCHETEA CORCHETEC|
 	     BOLEANO IDENTIFICADOR CORCHETEA NUMERO CORCHETEC SIGUAL LLAVEA BOLEANOSTEXT LLAVEC  FINLINEA ARREGLOS;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**/
+/**********-**************-************-*********-***********-*************-***********-************-***********-************-***********-***********/
+/*Lectura escritura*/
+ESCRITURA ::= ESCRIBIR BOOLNUM|
+              ESCRIBIR CADTEXTO| 
+              ESCRIBIR BOOLTEXT|
+              ESCRIBIR OPERACION|
+              ESCRIBIR BOOLNUM FINLINEA|
+              ESCRIBIR BOOLTEXT FINLINEA|
+              ESCRIBIR CADTEXTO FINLINEA| 
+              ESCRIBIR OPERACION FINLINEA|
+              ESCRIBIR BOOLNUM CONTENIDOESCRI|
+              ESCRIBIR BOOLTEXT CONTENIDOESCRI|
+              ESCRIBIR CADTEXTO CONTENIDOESCRI|
+              ESCRIBIR OPERACION CONTENIDOESCRI|
+              ESCRIBIR BOOLNUM FINLINEA ESCRITURA|
+              ESCRIBIR BOOLTEXT FINLINEA ESCRITURA|
+              ESCRIBIR CADTEXTO FINLINEA ESCRITURA| 
+              ESCRIBIR OPERACION FINLINEA ESCRITURA|
+              ESCRIBIR BOOLNUM CONTENIDOESCRI FINLINEA|
+              ESCRIBIR CADTEXTO CONTENIDOESCRI FINLINEA|
+              ESCRIBIR BOOLTEXT CONTENIDOESCRI FINLINEA|
+              ESCRIBIR OPERACION CONTENIDOESCRI FINLINEA|
+              ESCRIBIR BOOLNUM CONTENIDOESCRI FINLINEA ESCRITURA|
+              ESCRIBIR BOOLTEXT CONTENIDOESCRI FINLINEA ESCRITURA|
+              ESCRIBIR OPERACION CONTENIDOESCRI FINLINEA ESCRITURA|
+              ESCRIBIR CADTEXTO CONTENIDOESCRI FINLINEA ESCRITURA;
+/**********-**************-************-*********-***********-*************-***********-************-***********-************-***********-***********/
+/*-----|------|--------|-----------|----------|----------|--------|-----------|-------|----------|----------|-------------|----------|--------|-----*/            
+/*Asignar valores a variables sin palabra reservada*/
+ASIGNAR ::= IDENTIFICADOR SIGUAL BOOLNUM|
+            IDENTIFICADOR SIGUAL OPERACION|
+            IDENTIFICADOR SIGUAL CADTEXTO|
+            IDENTIFICADOR SIGUAL BOOLTEXT|
+            IDENTIFICADOR SIGUAL BOOLNUM FINLINEA|
+            IDENTIFICADOR SIGUAL CADTEXTO FINLINEA|
+            IDENTIFICADOR SIGUAL BOOLTEXT FINLINEA|
+            IDENTIFICADOR SIGUAL OPERACION FINLINEA|
+            IDENTIFICADOR SIGUAL BOOLNUM FINLINEA ASIGNAR|
+            IDENTIFICADOR SIGUAL CADTEXTO FINLINEA ASIGNAR| 
+            IDENTIFICADOR SIGUAL BOOLTEXT FINLINEA ASIGNAR|
+            IDENTIFICADOR SIGUAL OPERACION FINLINEA ASIGNAR;
+/*-----|------|--------|-----------|----------|----------|--------|-----------|-------|----------|----------|-------------|----------|--------|-----*/            
+/**********-**************-************-*********-***********-*************-***********-************-***********-************-***********-***********/
+/*Contenido para escribir*/
+CONTENIDOESCRI ::=  SUMA CADTEXTO|
+                    SUMA CADTEXTO SUMA BOOLNUM|
+                    SUMA CADTEXTO SUMA BOOLTEXT|
+                    SUMA CADTEXTO SUMA CADTEXTO|
+                    SUMA CADTEXTO SUMA OPERACION|   
+                    SUMA CADTEXTO SUMA BOOLNUM CONTENIDOESCRI|
+                    SUMA CADTEXTO SUMA BOOLTEXT CONTENIDOESCRI|
+                    SUMA CADTEXTO SUMA CADTEXTO CONTENIDOESCRI|
+                    SUMA CADTEXTO SUMA OPERACION CONTENIDOESCRI;
+
+/**********-**************-************-*********-***********-*************-***********-************-***********-************-***********-***********/
 /*------------------------------------------------------------------------------------------------------------------------------------------------*/            
+/*Declaración de Variables*/
 DECVARIABLES ::= REAL IDREAL| 
-                 CADENA IDCAD |
+                 CADENA IDCAD|
                  ENTERO IDINT|
                  BOLEANO IDBOOL| 
                  REAL IDREAL FINLINEA| 
@@ -109,7 +177,7 @@ IDBOOL ::= IDENTIFICADOR |
 IDREAL ::= IDENTIFICADOR |
            IDENTIFICADOR COMA IDREAL |
            IDENTIFICADOR SIGUAL DECIMAL |
-           IDENTIFICADOR SIGUAL DECIMAL COMA IDREAL ;
+           IDENTIFICADOR SIGUAL DECIMAL COMA IDREAL;
 
 IDCAD ::= IDENTIFICADOR |
           IDENTIFICADOR COMA IDCAD |
@@ -120,24 +188,54 @@ IDINT ::= IDENTIFICADOR |
           IDENTIFICADOR COMA IDINT | 
           IDENTIFICADOR SIGUAL NUMERO |  
           IDENTIFICADOR SIGUAL NUMERO COMA IDINT ;
-/*------------------------------------------------------------------------------------------------------------------------------------------------*/            
 
+/*------------------------------------------------------------------------------------------------------------------------------------------------*/            
+/*----------/-------------/------------/----------/-----------/----------/-------------/------------/-----------/-----------/------------/----------*/
+/*Validacion de operaciones numéricas*/
+OPERACION ::= NUMEROS|             
+              OPERACION MOD OPERACION |
+              OPERACION SUMA OPERACION|
+              OPERACION RESTA OPERACION|
+              OPERACION DIVISION OPERACION|
+              OPERACION EXPONENTE OPERACION|
+              OPERACION MULTIPLICACION OPERACION;
+
+NUMEROS ::=  NUMERO|
+             DECIMAL|
+             IDENTIFICADOR|
+             NUMERO OPERACION|
+             DECIMAL OPERACION|
+             IDENTIFICADOR OPERACION;
+            
+/*----------/-------------/------------/----------/-----------/----------/-------------/------------/-----------/-----------/------------/----------*/
+/**********-**************-************-*********-***********-*************-***********-************-***********-************-***********-***********/
+/*Lectura escritura*/
+LECTURA ::= LEER IDENTIFICADOR|
+            LEER IDENTIFICADOR FINLINEA|
+            LEER IDENTIFICADOR FINLINEA LECTURA;
+/**********-**************-************-*********-***********-*************-***********-************-***********-************-***********-***********/
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**/
-/*Arreglos*/
+/*Valores internos de los rreglos*/
 DECIMALES ::= DECIMAL|
-             DECIMAL COMA DECIMALES;
+              DECIMAL COMA DECIMALES;
 ENTEROS ::= ENTERO|
-	   ENTERO COMA ENTEROS;
+	    ENTERO COMA ENTEROS;
 CADENAS ::= CADTEXTO|
-	   CADTEXTO COMA CADENAS;
+	    CADTEXTO COMA CADENAS;
 
 BOLEANOSTEXT ::= BOOLTEXT|
-		BOOLTEXT COMA BOLEANOSTEXT;
-
+		 BOOLTEXT COMA BOLEANOSTEXT;
 BOLEANOSNUM ::= BOOLNUM|
-	       BOOLNUM COMA BOLEANOSNUM ;
+	        BOOLNUM COMA BOLEANOSNUM ;
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**/
 /*------------------------------------------------------------------------------------------------------------------------------------------------*/
-ID ::= IDENTIFICADOR 
-       |IDENTIFICADOR COMA ID ;
+//ID ::= IDENTIFICADOR| 
+//       IDENTIFICADOR SUMOCOM ID ;
 /*------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+//SUMOCOM ::= SUMA|          
+//            COMA;
+/*SUMAR ::= NUMERO:n1 SUMA NUMERO:n2 {:RESULT = new Integer( n1.intValue()+n2.intValue());System.out.println(RESULT); :}|
+          NUMERO:n1 SUMA NUMERO:n2 FINLINEA {:RESULT = new Integer( n1.intValue()+n2.intValue());System.out.println(RESULT);:}|
+          NUMERO:n1 SUMA NUMERO:n2 FINLINEA SUMAR {:RESULT = new Integer( n1.intValue()+n2.intValue());System.out.println(RESULT);:}
+          ;*/

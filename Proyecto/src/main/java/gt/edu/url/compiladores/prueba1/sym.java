@@ -20,6 +20,7 @@ public interface sym {
   public static final int EXPONENTE = 28;
   public static final int SI = 35;
   public static final int CONSTRUCTOR = 47;
+  public static final int TEXTO = 82;
   public static final int CORCHETEC = 22;
   public static final int CORCHETEA = 21;
   public static final int LEER = 44;
@@ -172,7 +173,8 @@ public interface sym {
   "ERRORNAMECLASS",
   "ERRORSIGNOS",
   "ERRORSIGNOS1",
-  "ERRORSIGNOS2"
+  "ERRORSIGNOS2",
+  "TEXTO"
   };
 }
 
