@@ -25,6 +25,8 @@ import java_cup.runtime.Symbol;
     D0 = "0"
     l = [A-Z][A-Za-z_]*
     espacio=[ \t\r\n]+
+    esp=[ \r\t]+
+    tab=[\t]+
 /*------------------------------------------Simbolos-------------------------------------------*/
     Sigual = "="
     Neg = "!"
@@ -32,11 +34,13 @@ import java_cup.runtime.Symbol;
     Comillas = "\""
     DobleIgual = "=="
     Negar = "!="
+    IgualMayMen = (">=" | "<=" )
     Op_incremento = ( "++" | "--" )
-    Op_relacional = ({MayMen}| DobleIgual | Negar | ">=" | "<=" )
+    Op_relacional = (MayMen| DobleIgual | Negar | IgualMayMen)
     Op_atribucion = ( "+=" | "-="  | "*=" | "/=" | "%=")
     Parentesis_a = "("
     Parentesis_c = ")"
+    theparenthesis = Parentesis_a Parentesis_c 
     Punto = "."
     Llave_a = "{"
     Llave_c = "}"
@@ -124,10 +128,10 @@ import java_cup.runtime.Symbol;
 /*-----------------------------------------Carga de Bibliotecas-----------------------------------*/
     BibLectura = "lectura.loop"
     BibPrint = "impresion.loop"
-    Bibliotecas = {BibLectura}|{BibPrint}
+    Bibliotecas = {Comillas}{ruta}*{BibLectura}{Comillas}//{BibLectura}|{BibPrint}
     ruta = "../"
     Incluir = "incluir"
-    BiExt = {Comillas}{ruta}*{Bibliotecas}{Comillas}
+    BiExt = {Comillas}{ruta}*{BibPrint}{Comillas}
 
 /*--------------------------------------------Extras----------------------------------------------*/
     Estatico = "estatico"
@@ -175,11 +179,14 @@ import java_cup.runtime.Symbol;
 /*--------------------------------------------Espacios en blanco----------------------------------*/
     {LineTerminator} {return new Symbol(sym.FINLINEA,yytext()); }
     {espacio} { }//{ return new Symbol(sym.FINLINEA,yytext());}
+    //{tab} {return new Symbol(sym.ESPACIO,yytext());}
 /*-----------------------------------------------Comentarios---------------------------------------*/
     {Comment} { } 
     {Comillas} { return new Symbol(sym.COMILLAS,yytext());}
     {DobleIgual} { return new Symbol(sym.DOBLEIGUAL,yytext());}
     {Negar} { return new Symbol(sym.NEGAR,yytext());}
+    {IgualMayMen} {return new Symbol(sym.IGUALMAYMEN,yytext());}
+    {MayMen} {return new Symbol(sym.MAYMEN,yytext());}
     {Punto} { return new Symbol(sym.PUNTO,yytext());}
     {Sigual} { return new Symbol(sym.SIGUAL,yytext());}
     {Suma} { return new Symbol(sym.SUMA,yytext());}
@@ -193,6 +200,7 @@ import java_cup.runtime.Symbol;
     {Op_incremento} { return new Symbol(sym.OPINCREMENTO,yytext());}
     {Parentesis_a} { return new Symbol(sym.PARENTESISA,yytext());}
     {Parentesis_c} { return new Symbol(sym.PARENTESISC,yytext());}
+    {theparenthesis} { return new Symbol(sym.THEPARENTHESIS,yytext());}
     {Llave_a} { return new Symbol(sym.LLAVEA,yytext());}
     {Llave_c } { return new Symbol(sym.LLAVEC,yytext());}
     {Corchete_a} { return new Symbol(sym.CORCHETEA,yytext());}
@@ -218,11 +226,11 @@ import java_cup.runtime.Symbol;
     {FinSi} { return new Symbol(sym.FINSI,yytext());}
 
 /*---------------------------------------Estructuras Iterativas---------------------------------*/
-    {Hacer} { return new Symbol(sym.HACER,yytext());}
-    {Mientras} { return new Symbol(sym.MIENTRAS,yytext());}
-    {Para} { return new Symbol(sym.PARA,yytext());}
-    {Devolver } { return new Symbol(sym.DEVOLVER,yytext());}
-    {Desde} { return new Symbol(sym.DESDE,yytext());}
+    {Hacer} { }
+    {Mientras} { }
+    {Para} { }
+    {Devolver } {return new Symbol(sym.DEVOLVER,yytext());}
+    {Desde} { }
 /*----------------------------------------Métodos de E/S-----------------------------------------*/
     {Leer} { return new Symbol(sym.LEER,yytext());}
     {Escribir} { return new Symbol(sym.ESCRIBIR,yytext());}
@@ -244,14 +252,16 @@ import java_cup.runtime.Symbol;
     {Instanciar} { return new Symbol(sym.INSTANCIAR,yytext());}
     {Eliminar} { return new Symbol(sym.ELIMINAR,yytext());}
 /*-----------------------------------Funciones Especiales-----------------------------------------*/
-    {CadenaAEntero} { return new Symbol(sym.CADENAaENTERO,yytext());}
-    {FunESPReal} { return new Symbol(sym.FUNespREAL,yytext());}
-    {CadenaABoleano} { return new Symbol(sym.CADaBOOL,yytext());}
+    {CadenaAEntero} { }
+    {FunESPReal} { }
+    {CadenaABoleano} { }
 /*-----------------------------------------Carga de Bibliotecas-----------------------------------*/
     {Incluir} { return new Symbol(sym.INCLUIR,yytext());}
-    {BiExt} { return new Symbol(sym.EXTENCIONBIB,yytext());}
+    {BiExt} { return new Symbol(sym.BibliPRINT,yytext());}
+    {Bibliotecas} { return new Symbol(sym.BibliLECT,yytext());}
+
 /*--------------------------------------------Extras----------------------------------------------*/
-    {Estatico} { return new Symbol(sym.ESTATICO,yytext());}
+    {Estatico} { }
 /*-------------------------------------------Variables y Números----------------------------------*/
     {Numero} { return new Symbol(sym.NUMERO,Integer.parseInt(yytext()));}
     {Decimal} { return new Symbol(sym.DECIMAL,Float.parseFloat(yytext()));}
@@ -259,20 +269,20 @@ import java_cup.runtime.Symbol;
 /*-------------------------------------------Cadenas de Texto-------------------------------------*/
     {Texto} { return new Symbol(sym.CADTEXTO,yytext());}
 /*----------------------------------------------Errores-------------------------------------------*/    
-    {ErrorCer} { return new Symbol(sym.ERRORCERO,yytext());}
-    {ErrorNum} { return new Symbol(sym.ERRORNUM,yytext());}
-    {ErrorDec} { return new Symbol(sym.ERRORDECIM,yytext());}
-    {ErrorCom} { return new Symbol(sym.ERRORCOM,yytext());}
-    {ErrorOp_IN} { return new Symbol(sym.ERROROPINC,yytext());}
-    {ErrorOp_Rel} { return new Symbol(sym.ERROREAL,yytext());}
-    {ErrorOp_Atr} { return new Symbol(sym.ERRORARIT,yytext());}
-    {ErrorSigP} { return new Symbol(sym.ERRORSIGP,yytext());}
-    {ErrorOPARBo} { return new Symbol(sym.ERROROPARBO,yytext());}
-    {ErrorSig} { return new Symbol(sym.ERRORSIG,yytext());}
-    {ErrorID} { return new Symbol(sym.ERRORID,yytext());}
-    {ErrorNameClss} { return new Symbol(sym.ERRORNAMECLASS,yytext());}
-    {ErrorSIGNOS} { return new Symbol(sym.ERRORSIGNOS,yytext());}
-    {ErrorSIGNOS1} { return new Symbol(sym.ERRORSIGNOS1,yytext());}
-    {ErrorSIGNOS2} { return new Symbol(sym.ERRORSIGNOS2,yytext());}
+    {ErrorCer} { }
+    {ErrorNum} { }
+    {ErrorDec} { }
+    {ErrorCom} { }
+    {ErrorOp_IN} { }
+    {ErrorOp_Rel} { }
+    {ErrorOp_Atr} { }
+    {ErrorSigP} { }
+    {ErrorOPARBo} { }
+    {ErrorSig} { }
+    {ErrorID} { }
+    {ErrorNameClss} { }
+    {ErrorSIGNOS} {  }
+    {ErrorSIGNOS1} { }
+    {ErrorSIGNOS2} { }
 /* Error de analisis */
 .                   { System.out.println("Error"+yytext());return new Symbol(sym.error);}
